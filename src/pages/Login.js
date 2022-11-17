@@ -2,7 +2,7 @@ import { BiFoodMenu } from 'react-icons/bi'
 
 const Login = () => {
     return (
-        <div className="bg-white flex items-center flex-col max-w-sm h-96 p-6 drop-shadow-md rounded-md gap-8">
+        <div className="bg-white flex items-center flex-col max-w-sm h-96 p-6 drop-shadow-lg rounded-md gap-8">
             <div className="flex gap-1">
                 <BiFoodMenu className="text-3xl" />
                 <h1 className="text-2xl font-semibold">CuisineConnoisseurs</h1>
@@ -30,7 +30,7 @@ const Login = () => {
                     Signin
                 </button>
             </form>
-            <a>Or, create an account</a>
+            <a>Don't have an account? Sign up</a>
         </div>
     )
 }
