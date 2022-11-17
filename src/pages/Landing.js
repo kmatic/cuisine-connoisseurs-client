@@ -19,7 +19,7 @@ const Landing = () => {
                         </button>
                     </Link>
                 </div>
-                <div className="bg-black w-3/6">PICTURE</div>
+                <div className="bg-black w-96">PICTURE</div>
             </section>
             <section className="my-8 text-center">
                 <h2 className="text-lg">Made with:</h2>

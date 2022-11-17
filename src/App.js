@@ -14,7 +14,7 @@ const App = () => {
     return (
         <Router basename="/">
             <Header />
-            <main>
+            <main className="flex justify-center">
                 <Routes>
                     <Route path="/" element={<Landing />} />
                     <Route path="/signin" element={<Login />} />
