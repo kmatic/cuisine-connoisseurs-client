@@ -17,7 +17,7 @@ const App = () => {
             <main className="flex justify-center">
                 <Routes>
                     <Route path="/" element={<Landing />} />
-                    <Route path="/signin" element={<Login />} />
+                    <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                 </Routes>
             </main>

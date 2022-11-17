@@ -1,6 +1,6 @@
 import { BiFoodMenu } from 'react-icons/bi'
 import { useState } from 'react'
-import { Navigate, Link, json } from 'react-router-dom'
+import { Navigate, Link } from 'react-router-dom'
 
 const Signup = ({ auth, setAuth }) => {
     const [username, setUsername] = useState('')
@@ -22,8 +22,7 @@ const Signup = ({ auth, setAuth }) => {
                     },
                 }
             )
-            if (res.status !== 200)
-                return console.error('Wrong username or password')
+            if (res.status !== 200) return console.error('Something went wrong')
             console.log(await res.json())
         } catch (err) {
             console.error(err)
@@ -68,7 +67,9 @@ const Signup = ({ auth, setAuth }) => {
                         Signup
                     </button>
                 </form>
-                <Link to="/signin">Already have an account? Sign in</Link>
+                <Link to="/signin" className="hover:text-blue-500">
+                    Already have an account? Login
+                </Link>
             </div>
         )
     }

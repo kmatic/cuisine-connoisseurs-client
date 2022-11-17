@@ -13,7 +13,7 @@ const Header = () => {
                 </Link>
                 <ul className="flex font-semibold text-base gap-3">
                     <li>
-                        <Link to="/signin">Signin</Link>
+                        <Link to="/login">Login</Link>
                     </li>
                     <li>
                         <Link to="/signup">Signup</Link>
