@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const Landing = () => {
     return (
         <div className="p-4 py-8 mx-2">
@@ -11,9 +13,11 @@ const Landing = () => {
                         with your friends. Cuisine Connoisseurs' everything a
                         foodie needs.
                     </p>
-                    <button className="border-slate-900 border border-solid bg-slate-900 text-white px-10 py-2 text-lg font-semibold rounded-md self-start hover:bg-white hover:text-slate-900">
-                        Create an Account
-                    </button>
+                    <Link to="/signup">
+                        <button className="border-slate-900 border-2 border-solid bg-slate-900 text-white px-10 py-2 text-lg font-semibold rounded-md self-start hover:bg-white hover:text-slate-900">
+                            Create an Account
+                        </button>
+                    </Link>
                 </div>
                 <div className="bg-black w-3/6">PICTURE</div>
             </section>
