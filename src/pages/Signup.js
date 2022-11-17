@@ -2,7 +2,7 @@ import { BiFoodMenu } from 'react-icons/bi'
 import { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 
-const Signup = ({ auth, setAuth }) => {
+const Signup = ({ auth }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
@@ -80,7 +80,7 @@ const Signup = ({ auth, setAuth }) => {
                         Signup
                     </button>
                 </form>
-                <Link to="/signin" className="hover:text-blue-500">
+                <Link to="/login" className="hover:text-blue-500">
                     Already have an account? Login
                 </Link>
             </div>

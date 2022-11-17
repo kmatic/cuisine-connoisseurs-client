@@ -9,16 +9,32 @@ import {
     Route,
     Navigate,
 } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
 const App = () => {
+    const [auth, setAuth] = useState(false)
+
+    useEffect(() => {
+        const isAuth = localStorage.getItem('auth')
+
+        if (isAuth) {
+            setAuth(true)
+        } else {
+            setAuth(false)
+        }
+    }, [])
+
     return (
         <Router basename="/">
-            <Header />
+            <Header auth={auth} setAuth={setAuth} />
             <main className="flex justify-center">
                 <Routes>
                     <Route path="/" element={<Landing />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
+                    <Route
+                        path="/login"
+                        element={<Login auth={auth} setAuth={setAuth} />}
+                    />
+                    <Route path="/signup" element={<Signup auth={auth} />} />
                 </Routes>
             </main>
             {/* <Footer /> */}
