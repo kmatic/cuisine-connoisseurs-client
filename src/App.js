@@ -10,6 +10,8 @@ import {
     Navigate,
 } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import Users from './pages/Users'
+import Profile from './pages/Profile'
 
 const App = () => {
     const [auth, setAuth] = useState(false)
@@ -35,6 +37,8 @@ const App = () => {
                         element={<Login auth={auth} setAuth={setAuth} />}
                     />
                     <Route path="/signup" element={<Signup auth={auth} />} />
+                    <Route path="/users" element={<Users />} />
+                    <Route path="/profile/profileid" element={<Profile />} />
                 </Routes>
             </main>
             {/* <Footer /> */}

@@ -34,7 +34,7 @@ const Header = ({ auth, setAuth }) => {
                                 <Link to="/">Home</Link>
                             </li>
                             <li>
-                                <Link to="/friends">Find Friends</Link>
+                                <Link to="/users">Find Friends</Link>
                             </li>
                             <li>
                                 <Link to="/profile">Profile</Link>
