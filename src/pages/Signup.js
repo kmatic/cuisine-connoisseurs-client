@@ -5,6 +5,7 @@ import { Navigate, Link } from 'react-router-dom'
 const Signup = ({ auth, setAuth }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [passwordConfirm, setPasswordConfirm] = useState('')
 
     async function handleSignup(e) {
         e.preventDefault()
@@ -16,6 +17,7 @@ const Signup = ({ auth, setAuth }) => {
                     body: JSON.stringify({
                         username: username,
                         password: password,
+                        passwordConfirm: passwordConfirm,
                     }),
                     headers: {
                         'Content-type': 'application/json',
@@ -31,7 +33,7 @@ const Signup = ({ auth, setAuth }) => {
 
     if (!auth) {
         return (
-            <div className="bg-white flex items-center flex-col max-w-sm h-96 p-6 drop-shadow-lg rounded-md gap-8">
+            <div className="bg-white flex items-center flex-col max-w-sm p-6 drop-shadow-lg rounded-md gap-8">
                 <div className="flex gap-1">
                     <BiFoodMenu className="text-3xl" />
                     <h1 className="text-2xl font-semibold">
@@ -61,6 +63,17 @@ const Signup = ({ auth, setAuth }) => {
                             className="border-b focus:outline-none pb-1"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label className="text-sm text-gray-600 font-semibold">
+                            Confirm Password
+                        </label>
+                        <input
+                            type="password"
+                            className="border-b focus:outline-none pb-1"
+                            value={passwordConfirm}
+                            onChange={(e) => setPasswordConfirm(e.target.value)}
                         />
                     </div>
                     <button className="bg-slate-900 text-white px-10 py-2 font-semibold text-xl rounded-md self-center">
