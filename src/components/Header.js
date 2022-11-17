@@ -11,7 +11,7 @@ const Header = () => {
                     </h1>
                 </div>
                 <ul className="flex font-semibold text-base gap-3">
-                    <li>Login</li>
+                    <li>Signin</li>
                     <li>Signup</li>
                 </ul>
             </nav>

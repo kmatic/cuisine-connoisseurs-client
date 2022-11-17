@@ -1,13 +1,15 @@
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Landing from './pages/Landing'
+import Login from './pages/Login'
 
 const App = () => {
     return (
         <>
             <Header />
-            <main className="bg-slate-100">
-                <Landing />
+            <main>
+                {/* <Landing /> */}
+                <Login />
             </main>
             {/* <Footer /> */}
         </>
