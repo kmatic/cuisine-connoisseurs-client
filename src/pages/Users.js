@@ -24,8 +24,8 @@ const Users = () => {
         }
     }
 
-    function handleRedirect(profileid) {
-        navigate(`/profile/${profileid}`)
+    function handleRedirect(id) {
+        navigate(`/profile/${id}`)
     }
 
     function handleAdd(e) {

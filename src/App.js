@@ -38,7 +38,7 @@ const App = () => {
                     />
                     <Route path="/signup" element={<Signup auth={auth} />} />
                     <Route path="/users" element={<Users />} />
-                    <Route path="/profile/profileid" element={<Profile />} />
+                    <Route path="/profile/:id" element={<Profile />} />
                 </Routes>
             </main>
             {/* <Footer /> */}
