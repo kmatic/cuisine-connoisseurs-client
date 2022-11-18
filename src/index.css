@@ -3,6 +3,5 @@
 @tailwind utilities;
 
 body {
-    /* max-width: 960px; */
-    /* margin: 0 auto; */
+    background-color: rgb(226 232 240);
 }

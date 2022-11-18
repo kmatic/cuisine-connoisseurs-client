@@ -37,7 +37,7 @@ const Users = () => {
     }, [])
 
     return (
-        <div>
+        <div className="container mx-auto my-10">
             <section>
                 <h3>Pending friend requests:</h3>
                 <div className="flex flex-col gap-4">
@@ -54,7 +54,7 @@ const Users = () => {
                 <div className="flex flex-col gap-4">
                     {users.map((user) => (
                         <div
-                            className="flex justify-between bg-slate-400 p-4 cursor-pointer"
+                            className="flex justify-between bg-white p-4 cursor-pointer drop-shadow-md rounded-md"
                             key={user._id}
                             onClick={() => handleRedirect(user._id)}>
                             <p>{user.username}</p>

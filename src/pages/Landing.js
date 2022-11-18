@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const Landing = () => {
     return (
-        <div className="p-4 py-8 mx-2">
+        <div className="container mx-auto p-4 my-10">
             <section className="flex gap-6">
                 <div className="max-w-xs flex flex-col gap-6">
                     <h1 className="text-4xl font-bold">

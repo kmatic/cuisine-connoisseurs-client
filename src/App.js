@@ -12,6 +12,7 @@ import {
 import { useState, useEffect } from 'react'
 import Users from './pages/Users'
 import Profile from './pages/Profile'
+import Posts from './pages/Posts'
 
 const App = () => {
     const [auth, setAuth] = useState(false)
@@ -29,7 +30,7 @@ const App = () => {
     return (
         <Router basename="/">
             <Header auth={auth} setAuth={setAuth} />
-            <main className="flex justify-center">
+            <main>
                 <Routes>
                     <Route path="/" element={<Landing />} />
                     <Route
@@ -39,6 +40,7 @@ const App = () => {
                     <Route path="/signup" element={<Signup auth={auth} />} />
                     <Route path="/users" element={<Users />} />
                     <Route path="/profile/:id" element={<Profile />} />
+                    <Route path="/posts" element={<Posts />} />
                 </Routes>
             </main>
             {/* <Footer /> */}

@@ -22,7 +22,7 @@ const Profile = () => {
     }, [])
 
     return (
-        <div className="flex flex-col gap-12">
+        <div className="container mx-auto my-10 flex flex-col gap-6">
             <div className="bg-white drop-shadow-md p-8 rounded-lg">
                 <div className="flex items-center gap-6">
                     <img src={userPicture} className="w-28" />
@@ -30,15 +30,16 @@ const Profile = () => {
                 </div>
                 <div>
                     <h2 className="font-bold text-xl">About me</h2>
+                    <p>CITY:</p>
                     <p>BIO: {profile.bio || 'No bio yet'}</p>
                     <p>JOINED: {profile.created}</p>
                 </div>
             </div>
             <div className="bg-white drop-shadow-md p-8 rounded-lg">
-                <h2 className="font-bold text-xl">Friends</h2>
+                <h2 className="font-bold text-xl">FRIENDS</h2>
             </div>
             <div className="bg-white drop-shadow-md p-8 rounded-lg">
-                <h2 className="font-bold text-xl">Posts</h2>
+                <h2 className="font-bold text-xl">RECENT ACTIVITY</h2>
             </div>
         </div>
     )

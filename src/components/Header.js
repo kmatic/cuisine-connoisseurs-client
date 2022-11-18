@@ -11,7 +11,7 @@ const Header = ({ auth, setAuth }) => {
 
     return (
         <header className="bg-slate-900 text-white p-4">
-            <nav className="flex items-center justify-between m-2">
+            <nav className="flex items-center justify-between m-2 container mx-auto">
                 <Link to="/" className="flex items-center gap-1">
                     <BiFoodMenu className="text-3xl" />
                     <h1 className="text-2xl font-semibold">
@@ -31,7 +31,7 @@ const Header = ({ auth, setAuth }) => {
                     ) : (
                         <>
                             <li>
-                                <Link to="/">Home</Link>
+                                <Link to="/posts">Home</Link>
                             </li>
                             <li>
                                 <Link to="/users">Find Friends</Link>
