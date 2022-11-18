@@ -18,28 +18,28 @@ const Header = ({ auth, setAuth }) => {
                         CuisineConnoisseurs
                     </h1>
                 </Link>
-                <ul className="flex font-semibold text-base gap-6">
+                <ul className="flex font-semibold text-base gap-6 text-slate-300">
                     {!auth ? (
                         <>
-                            <li>
+                            <li className="hover:text-white">
                                 <Link to="/login">Login</Link>
                             </li>
-                            <li>
+                            <li className="hover:text-white">
                                 <Link to="/signup">Signup</Link>
                             </li>
                         </>
                     ) : (
                         <>
-                            <li>
+                            <li className="hover:text-white">
                                 <Link to="/posts">Home</Link>
                             </li>
-                            <li>
+                            <li className="hover:text-white">
                                 <Link to="/users">Find Friends</Link>
                             </li>
-                            <li>
+                            <li className="hover:text-white">
                                 <Link to="/profile">Profile</Link>
                             </li>
-                            <li>
+                            <li className="hover:text-white">
                                 <button onClick={logout}>Logout</button>
                             </li>
                         </>

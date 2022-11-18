@@ -61,23 +61,23 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="flex text-center self-start">
-                    <div className="p-3 border-r">
+                    <div className="px-3 border-r">
                         <p className="font-bold text-2xl">10</p>
                         <p className="text-xs text-gray-600">ENTRIES</p>
                     </div>
-                    <div className="p-3 border-r">
+                    <div className="px-3 border-r">
                         <p className="font-bold text-2xl">2</p>
-                        <p className="text-xs text-gray-600">FRIENDS</p>
+                        <p className="text-xs text-gray-600">FOLLOWERS</p>
                     </div>
-                    <div className="p-3">
+                    <div className="px-3">
                         <p className="font-bold text-2xl">3</p>
-                        <p className="text-xs text-gray-600">SAVED</p>
+                        <p className="text-xs text-gray-600">FOLLOWING</p>
                     </div>
                 </div>
             </div>
             <div className="grid grid-cols-3 gap-6">
                 <div className="bg-white drop-shadow-md p-8 rounded-lg col-span-1">
-                    <h2 className="font-bold text-xl">FRIENDS</h2>
+                    <h2 className="font-bold text-xl">FOLLOWERS</h2>
                 </div>
                 <div className="bg-white drop-shadow-md p-8 rounded-lg col-span-2">
                     <h2 className="font-bold text-xl">RECENT ACTIVITY</h2>
