@@ -14,7 +14,7 @@ const Landing = () => {
                         foodie needs.
                     </p>
                     <Link to="/signup">
-                        <button className="border-slate-900 border-2 border-solid bg-slate-900 text-white px-10 py-2 text-lg font-semibold rounded-md self-start hover:bg-white hover:text-slate-900">
+                        <button className="border-slate-900 border-2 border-solid bg-slate-900 text-white px-10 py-2 text-lg font-semibold rounded-md self-start hover:bg-inherit hover:text-slate-900">
                             Create an Account
                         </button>
                     </Link>
