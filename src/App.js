@@ -15,31 +15,34 @@ import Profile from './pages/Profile'
 import Posts from './pages/Posts'
 
 const App = () => {
-    const [auth, setAuth] = useState(false)
+    const [user, setUser] = useState(false)
 
     useEffect(() => {
-        const isAuth = localStorage.getItem('auth')
+        const isUser = localStorage.getItem('user')
 
-        if (isAuth) {
-            setAuth(true)
+        if (isUser) {
+            setUser(isUser)
         } else {
-            setAuth(false)
+            setUser(false)
         }
     }, [])
 
     return (
         <Router basename="/">
-            <Header auth={auth} setAuth={setAuth} />
+            <Header user={user} setUser={setUser} />
             <main>
                 <Routes>
                     <Route path="/" element={<Landing />} />
                     <Route
                         path="/login"
-                        element={<Login auth={auth} setAuth={setAuth} />}
+                        element={<Login user={user} setUser={setUser} />}
                     />
-                    <Route path="/signup" element={<Signup auth={auth} />} />
+                    <Route path="/signup" element={<Signup user={user} />} />
                     <Route path="/users" element={<Users />} />
-                    <Route path="/profile/:id" element={<Profile />} />
+                    <Route
+                        path="/profile/:id"
+                        element={<Profile user={user} />}
+                    />
                     <Route path="/posts" element={<Posts />} />
                 </Routes>
             </main>

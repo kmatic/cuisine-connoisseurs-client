@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BsSearch } from 'react-icons/bs'
+import defaultProfile from '../assets/defaultUserImg.png'
 
 const Users = () => {
     const [users, setUsers] = useState([])
@@ -15,6 +16,10 @@ const Users = () => {
             const res = await fetch('http://localhost:5000/api/users')
             const data = await res.json()
             setUsers(data.users)
+            setSearch({
+                query: '',
+                filtered: data.users,
+            })
         } catch (err) {
             console.error(err)
         }
@@ -74,7 +79,14 @@ const Users = () => {
                                 className="flex justify-between bg-white p-5 cursor-pointer drop-shadow-md rounded-md hover:bg-slate-200"
                                 key={user._id}
                                 onClick={() => handleRedirect(user._id)}>
-                                <p>{user.username}</p>
+                                <div className="flex gap-2 items-center">
+                                    <img
+                                        src={defaultProfile}
+                                        alt=""
+                                        className="w-6"
+                                    />
+                                    <p>{user.username}</p>
+                                </div>
                                 <button
                                     className="bg-slate-900 text-white text-xs px-2 font-semibold rounded-md flex items-center gap-1 hover:brightness-150"
                                     onClick={(e) => handleAdd(e)}>

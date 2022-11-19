@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import userPicture from '../assets/defaultUserImg.png'
 import { FiEdit2 } from 'react-icons/fi'
 
-const Profile = () => {
+const Profile = ({ user }) => {
     const [profile, setProfile] = useState({})
     const { id } = useParams()
 
@@ -12,7 +12,6 @@ const Profile = () => {
             const res = await fetch(`http://localhost:5000/api/profile/${id}`)
             const data = await res.json()
             setProfile(data.profile)
-            console.log(data.profile)
         } catch (err) {
             console.error(err)
         }
@@ -35,10 +34,12 @@ const Profile = () => {
                     <div className="flex flex-col gap-2">
                         <div className="flex justify-between border-b py-2">
                             <h2 className="font-bold text-xl">ABOUT ME</h2>
-                            <button className="bg-slate-900 text-white text-xs px-2 font-semibold rounded-md flex items-center gap-1 hover:brightness-150">
-                                <span>EDIT PROFILE</span>
-                                <FiEdit2 />
-                            </button>
+                            {user._id === id && (
+                                <button className="bg-slate-900 text-white text-xs px-2 font-semibold rounded-md flex items-center gap-1 hover:brightness-150">
+                                    <span>EDIT PROFILE</span>
+                                    <FiEdit2 />
+                                </button>
+                            )}
                         </div>
                         <div className="flex gap-8">
                             <div>

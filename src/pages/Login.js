@@ -2,38 +2,35 @@ import { BiFoodMenu } from 'react-icons/bi'
 import { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 
-const Login = ({ auth, setAuth }) => {
+const Login = ({ user, setUser }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     async function handleLogin(e) {
         e.preventDefault()
         try {
-            const res = await fetch(
-                'https://obscure-sea-68837.herokuapp.com/api/login',
-                {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        username: username,
-                        password: password,
-                    }),
-                    headers: {
-                        'Content-type': 'application/json',
-                    },
-                }
-            )
+            const res = await fetch('http://localhost:5000/api/login', {
+                method: 'POST',
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                }),
+                headers: {
+                    'Content-type': 'application/json',
+                },
+            })
             if (res.status !== 200)
                 return console.error('Wrong username or password')
             const data = await res.json()
-            localStorage.setItem('auth', true)
+            localStorage.setItem('user', data.user)
             localStorage.setItem('token', data.token)
-            setAuth(true)
+            setUser(data.user)
         } catch (err) {
             console.error(err)
         }
     }
 
-    if (!auth) {
+    if (!user) {
         return (
             <div className="container mx-auto bg-white flex items-center flex-col max-w-sm p-6 drop-shadow-lg rounded-md gap-8 my-10">
                 <div className="flex gap-1">

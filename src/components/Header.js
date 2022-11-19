@@ -1,11 +1,11 @@
 import { BiFoodMenu } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 
-const Header = ({ auth, setAuth }) => {
+const Header = ({ user, setUser }) => {
     function logout(e) {
         e.preventDefault()
-        setAuth(false)
-        localStorage.removeItem('auth')
+        setUser(false)
+        localStorage.removeItem('user')
         localStorage.removeItem('token')
     }
 
@@ -19,7 +19,7 @@ const Header = ({ auth, setAuth }) => {
                     </h1>
                 </Link>
                 <ul className="flex font-semibold text-base gap-6 text-slate-300">
-                    {!auth ? (
+                    {!user ? (
                         <>
                             <li className="hover:text-white">
                                 <Link to="/login">Login</Link>
@@ -37,7 +37,7 @@ const Header = ({ auth, setAuth }) => {
                                 <Link to="/users">Find Friends</Link>
                             </li>
                             <li className="hover:text-white">
-                                <Link to="/profile">Profile</Link>
+                                <Link to={`/profile/${user._id}`}>Profile</Link>
                             </li>
                             <li className="hover:text-white">
                                 <button onClick={logout}>Logout</button>
