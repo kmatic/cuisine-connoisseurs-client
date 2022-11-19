@@ -7,19 +7,21 @@ const Profile = ({ user }) => {
     const [profile, setProfile] = useState({})
     const { id } = useParams()
 
-    async function getProfile() {
-        try {
-            const res = await fetch(`http://localhost:5000/api/profile/${id}`)
-            const data = await res.json()
-            setProfile(data.profile)
-        } catch (err) {
-            console.error(err)
-        }
-    }
-
     useEffect(() => {
+        async function getProfile() {
+            try {
+                const res = await fetch(
+                    `http://localhost:5000/api/profile/${id}`
+                )
+                const data = await res.json()
+                setProfile(data.profile)
+            } catch (err) {
+                console.error(err)
+            }
+        }
+
         getProfile()
-    }, [])
+    }, [id])
 
     return (
         <div className="container mx-auto my-10 flex flex-col gap-6">
