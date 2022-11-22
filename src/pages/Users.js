@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { BsSearch } from 'react-icons/bs'
 import defaultProfile from '../assets/defaultUserImg.png'
 
-const Users = ({ currentUser }) => {
+const Users = ({ currentUser, setCurrentUser }) => {
     const [users, setUsers] = useState([])
     const [search, setSearch] = useState({
         query: '',
@@ -29,13 +29,40 @@ const Users = ({ currentUser }) => {
         navigate(`/profile/${id}`)
     }
 
-    function handleFollow(e, user) {
+    async function handleFollow(e, user) {
         e.stopPropagation()
-        if (!user.followers.includes(currentUser._id)) {
-            user.followers.push(user._id)
+        if (
+            user.followers.includes(currentUser._id) ||
+            currentUser.following.includes(user._id)
+        ) {
+            return
         }
-
-        // const res = await fetch
+        const followers = [...user.followers, currentUser._id]
+        const following = [...currentUser.following, user._id]
+        const token = localStorage.getItem('token')
+        try {
+            const res = await fetch(
+                `http://localhost:5000/api/profile/${user._id}/follow`,
+                {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        followers: followers,
+                        following: following,
+                        user: currentUser._id,
+                    }),
+                }
+            )
+            if (res.status !== 200) return console.error('Something went wrong')
+            const data = await res.json()
+            setCurrentUser(data.user)
+            console.log(data)
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     function handleSearch(e) {

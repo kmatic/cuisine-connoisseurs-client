@@ -35,7 +35,12 @@ const App = () => {
                     <Route path="/signup" element={<Signup user={user} />} />
                     <Route
                         path="/users"
-                        element={<Users currentUser={user} />}
+                        element={
+                            <Users
+                                currentUser={user}
+                                setCurrentUser={setUser}
+                            />
+                        }
                     />
                     <Route
                         path="/profile/:id"
