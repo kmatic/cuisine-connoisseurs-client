@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Navigate, useNavigate } from 'react-router-dom'
 import userPicture from '../assets/defaultUserImg.png'
 import { FiEdit2 } from 'react-icons/fi'
 import moment from 'moment'
+import defaultProfile from '../assets/defaultUserImg.png'
 
 const Profile = ({ user }) => {
     const [profile, setProfile] = useState({})
     const [editMode, setEditMode] = useState(false)
     const { id } = useParams()
+    const navigate = useNavigate()
 
     const [city, setCity] = useState('')
     const [message, setMessage] = useState('')
@@ -43,6 +45,10 @@ const Profile = ({ user }) => {
         }
     }
 
+    function handleRedirect(id) {
+        navigate(`/profile/${id}`)
+    }
+
     useEffect(() => {
         async function getProfile() {
             try {
@@ -50,6 +56,7 @@ const Profile = ({ user }) => {
                     `http://localhost:5000/api/profile/${id}`
                 )
                 const data = await res.json()
+                console.log(data.profile)
                 setProfile(data.profile)
             } catch (err) {
                 console.error(err)
@@ -175,8 +182,25 @@ const Profile = ({ user }) => {
                 </div>
             </div>
             <div className="grid grid-cols-3 gap-6">
-                <div className="bg-white drop-shadow-md p-8 rounded-lg col-span-1">
+                <div className="bg-white drop-shadow-md p-8 rounded-lg col-span-1 flex flex-col gap-2">
                     <h2 className="font-bold text-xl">FOLLOWERS</h2>
+                    {profile.followers ? (
+                        profile.followers.map((follower) => (
+                            <div
+                                key={follower._id}
+                                className="flex gap-4 items-center cursor-pointer hover:bg-gray-200 py-2 rounded-md"
+                                onClick={() => handleRedirect(follower._id)}>
+                                <img
+                                    src={defaultProfile}
+                                    alt=""
+                                    className="w-8"
+                                />
+                                <p className="text-lg">{follower.username}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <div>No followers</div>
+                    )}
                 </div>
                 <div className="bg-white drop-shadow-md p-8 rounded-lg col-span-2">
                     <h2 className="font-bold text-xl">RECENT ACTIVITY</h2>
