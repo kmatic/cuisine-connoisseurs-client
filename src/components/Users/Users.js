@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BsSearch } from 'react-icons/bs'
-import defaultProfile from '../assets/defaultUserImg.png'
+import defaultProfile from '../../assets/defaultUserImg.png'
 
 const Users = ({ currentUser, setCurrentUser }) => {
     const [users, setUsers] = useState([])

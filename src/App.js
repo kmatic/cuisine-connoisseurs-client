@@ -1,13 +1,13 @@
 import Header from './components/Header'
 import Footer from './components/Footer'
-import Landing from './pages/Landing'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
+import Landing from './components/Landing/Landing'
+import Login from './components/Login/Login'
+import Signup from './components/Signup/Signup'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import Users from './pages/Users'
-import Profile from './pages/Profile'
-import Posts from './pages/Posts'
+import Users from './components/Users/Users'
+import Profile from './components/Profile/Profile'
+import Posts from './components/Posts/Posts'
 
 const App = () => {
     const [user, setUser] = useState(false)

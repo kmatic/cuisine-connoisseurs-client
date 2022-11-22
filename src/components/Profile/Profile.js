@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react'
-import { useParams, Navigate, useNavigate } from 'react-router-dom'
-import userPicture from '../assets/defaultUserImg.png'
+import { useParams, useNavigate } from 'react-router-dom'
+import userPicture from '../../assets/defaultUserImg.png'
 import { FiEdit2 } from 'react-icons/fi'
 import moment from 'moment'
-import defaultProfile from '../assets/defaultUserImg.png'
 
 const Profile = ({ user }) => {
-    const [profile, setProfile] = useState({})
+    const [profile, setProfile] = useState({
+        followers: [],
+        posts: [],
+    })
     const [editMode, setEditMode] = useState(false)
     const { id } = useParams()
     const navigate = useNavigate()
@@ -56,7 +58,7 @@ const Profile = ({ user }) => {
                     `http://localhost:5000/api/profile/${id}`
                 )
                 const data = await res.json()
-                console.log(data.profile)
+                // console.log(data.profile)
                 setProfile(data.profile)
             } catch (err) {
                 console.error(err)
@@ -65,6 +67,8 @@ const Profile = ({ user }) => {
 
         getProfile()
     }, [id])
+
+    console.log(profile)
 
     return (
         <div className="container mx-auto my-10 flex flex-col gap-6">
@@ -184,22 +188,18 @@ const Profile = ({ user }) => {
             <div className="grid grid-cols-3 gap-6">
                 <div className="bg-white drop-shadow-md p-8 rounded-lg col-span-1 flex flex-col gap-2">
                     <h2 className="font-bold text-xl">FOLLOWERS</h2>
-                    {profile.followers ? (
+                    {!(profile.followers.length === 0) ? (
                         profile.followers.map((follower) => (
                             <div
                                 key={follower._id}
                                 className="flex gap-4 items-center cursor-pointer hover:bg-gray-200 py-2 rounded-md"
                                 onClick={() => handleRedirect(follower._id)}>
-                                <img
-                                    src={defaultProfile}
-                                    alt=""
-                                    className="w-8"
-                                />
+                                <img src={userPicture} alt="" className="w-8" />
                                 <p className="text-lg">{follower.username}</p>
                             </div>
                         ))
                     ) : (
-                        <div>No followers</div>
+                        <div className="py-2 italic">No followers yet</div>
                     )}
                 </div>
                 <div className="bg-white drop-shadow-md p-8 rounded-lg col-span-2">
