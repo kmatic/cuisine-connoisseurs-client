@@ -14,15 +14,31 @@ const Profile = ({ user }) => {
     function handleEditMode() {
         setEditMode(true)
         setCity(profile.city)
-        setMessage(profile.message)
+        setMessage(profile.bio)
     }
 
-    function handleSave() {
-        setEditMode(false)
-        const newProfile = { ...profile }
-        newProfile.city = city
-        newProfile.message = message
-        setProfile(newProfile)
+    async function handleSave() {
+        const token = localStorage.getItem('token')
+        try {
+            const res = await fetch(`http://localhost:5000/api/profile/${id}`, {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    city: city,
+                    bio: message,
+                }),
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            if (res.status !== 200) return console.error('Something went wrong')
+            const data = await res.json()
+            setEditMode(false)
+            setProfile(data.updatedUser)
+        } catch (err) {
+            console.error(err)
+            setEditMode(false)
+        }
     }
 
     useEffect(() => {
@@ -81,7 +97,7 @@ const Profile = ({ user }) => {
                                         {profile.city || 'No city'}
                                     </p>
                                     <p className="text-lg">
-                                        {profile.message || 'No message'}
+                                        {profile.bio || 'No message'}
                                     </p>
                                     <p className="text-lg">{profile.created}</p>
                                 </div>
@@ -97,13 +113,11 @@ const Profile = ({ user }) => {
                                             className="bg-red-500 text-white text-xs px-2 font-semibold rounded-md flex items-center gap-1 hover:brightness-125"
                                             onClick={() => setEditMode(false)}>
                                             <span>CANCEL</span>
-                                            <FiEdit2 />
                                         </button>
                                         <button
                                             className="bg-green-500 text-white text-xs px-2 font-semibold rounded-md flex items-center gap-1 hover:brightness-125"
                                             onClick={handleSave}>
-                                            <span>SAVE</span>
-                                            <FiEdit2 />
+                                            <span>SAVE CHANGES</span>
                                         </button>
                                     </div>
                                 )}
