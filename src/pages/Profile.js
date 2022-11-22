@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import userPicture from '../assets/defaultUserImg.png'
 import { FiEdit2 } from 'react-icons/fi'
+import { parseISO, format } from 'date-fns'
 
 const Profile = ({ user }) => {
     const [profile, setProfile] = useState({})
@@ -33,8 +34,8 @@ const Profile = ({ user }) => {
             })
             if (res.status !== 200) return console.error('Something went wrong')
             const data = await res.json()
-            setEditMode(false)
             setProfile(data.updatedUser)
+            setEditMode(false)
         } catch (err) {
             console.error(err)
             setEditMode(false)
@@ -99,7 +100,12 @@ const Profile = ({ user }) => {
                                     <p className="text-lg">
                                         {profile.bio || 'No message'}
                                     </p>
-                                    <p className="text-lg">{profile.created}</p>
+                                    <p className="text-lg">
+                                        {format(
+                                            parseISO(profile.created),
+                                            'LLLL d, yyyy'
+                                        )}
+                                    </p>
                                 </div>
                             </div>
                         </div>
