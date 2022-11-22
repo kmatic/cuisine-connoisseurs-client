@@ -3,12 +3,7 @@ import Footer from './components/Footer'
 import Landing from './pages/Landing'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    Navigate,
-} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Users from './pages/Users'
 import Profile from './pages/Profile'
@@ -38,7 +33,10 @@ const App = () => {
                         element={<Login user={user} setUser={setUser} />}
                     />
                     <Route path="/signup" element={<Signup user={user} />} />
-                    <Route path="/users" element={<Users />} />
+                    <Route
+                        path="/users"
+                        element={<Users currentUser={user} />}
+                    />
                     <Route
                         path="/profile/:id"
                         element={<Profile user={user} />}

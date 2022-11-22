@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { BsSearch } from 'react-icons/bs'
 import defaultProfile from '../assets/defaultUserImg.png'
 
-const Users = () => {
+const Users = ({ currentUser }) => {
     const [users, setUsers] = useState([])
     const [search, setSearch] = useState({
         query: '',
@@ -29,8 +29,13 @@ const Users = () => {
         navigate(`/profile/${id}`)
     }
 
-    function handleAdd(e) {
+    function handleFollow(e, user) {
         e.stopPropagation()
+        if (!user.followers.includes(currentUser._id)) {
+            user.followers.push(user._id)
+        }
+
+        // const res = await fetch
     }
 
     function handleSearch(e) {
@@ -87,11 +92,13 @@ const Users = () => {
                                     />
                                     <p>{user.username}</p>
                                 </div>
-                                <button
-                                    className="bg-slate-900 text-white text-xs px-2 font-semibold rounded-md flex items-center gap-1 hover:brightness-150"
-                                    onClick={(e) => handleAdd(e)}>
-                                    ADD +
-                                </button>
+                                {!(currentUser._id === user._id) && (
+                                    <button
+                                        className="bg-slate-900 text-white text-xs px-2 font-semibold rounded-md flex items-center gap-1 hover:brightness-150"
+                                        onClick={(e) => handleFollow(e, user)}>
+                                        FOLLOW +
+                                    </button>
+                                )}
                             </div>
                         ))
                     )}
