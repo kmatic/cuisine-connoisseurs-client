@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import userPicture from '../assets/defaultUserImg.png'
 import { FiEdit2 } from 'react-icons/fi'
-import { parseISO, format } from 'date-fns'
+import moment from 'moment'
 
 const Profile = ({ user }) => {
     const [profile, setProfile] = useState({})
@@ -101,9 +101,8 @@ const Profile = ({ user }) => {
                                         {profile.bio || 'No message'}
                                     </p>
                                     <p className="text-lg">
-                                        {format(
-                                            parseISO(profile.created),
-                                            'LLLL d, yyyy'
+                                        {moment(profile.created).format(
+                                            'YYYY-MM-DD'
                                         )}
                                     </p>
                                 </div>
