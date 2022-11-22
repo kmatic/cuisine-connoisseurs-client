@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { BsSearch } from 'react-icons/bs'
-import defaultProfile from '../../assets/defaultUserImg.png'
+import UserCard from './UserCard'
 
 const Users = ({ currentUser, setCurrentUser }) => {
     const [users, setUsers] = useState([])
@@ -9,7 +8,6 @@ const Users = ({ currentUser, setCurrentUser }) => {
         query: '',
         filtered: [],
     })
-    const navigate = useNavigate()
 
     async function getUsers() {
         try {
@@ -23,10 +21,6 @@ const Users = ({ currentUser, setCurrentUser }) => {
         } catch (err) {
             console.error(err)
         }
-    }
-
-    function handleRedirect(id) {
-        navigate(`/profile/${id}`)
     }
 
     async function handleFollow(e, user) {
@@ -107,26 +101,12 @@ const Users = ({ currentUser, setCurrentUser }) => {
                         </span>
                     ) : (
                         search.filtered.map((user) => (
-                            <div
-                                className="flex justify-between bg-white p-5 cursor-pointer drop-shadow-md rounded-md hover:bg-slate-200"
+                            <UserCard
                                 key={user._id}
-                                onClick={() => handleRedirect(user._id)}>
-                                <div className="flex gap-2 items-center">
-                                    <img
-                                        src={defaultProfile}
-                                        alt=""
-                                        className="w-6"
-                                    />
-                                    <p>{user.username}</p>
-                                </div>
-                                {!(currentUser._id === user._id) && (
-                                    <button
-                                        className="bg-slate-900 text-white text-xs px-2 font-semibold rounded-md flex items-center gap-1 hover:brightness-150"
-                                        onClick={(e) => handleFollow(e, user)}>
-                                        FOLLOW +
-                                    </button>
-                                )}
-                            </div>
+                                user={user}
+                                currentUser={currentUser}
+                                handleFollow={handleFollow}
+                            />
                         ))
                     )}
                 </div>
