@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import userPicture from '../../assets/defaultUserImg.png'
 import { FiEdit2 } from 'react-icons/fi'
 import moment from 'moment'
@@ -69,7 +69,7 @@ const Profile = () => {
 
     return (
         <div className="container mx-auto my-10 flex flex-col gap-6">
-            <div className="bg-white drop-shadow-md p-10 rounded-lg flex items-center justify-between">
+            <div className="bg-white drop-shadow-md p-10 rounded-xl flex items-center justify-between">
                 <div className="flex gap-10">
                     <div>
                         <img src={userPicture} className="w-28" alt="" />
@@ -183,33 +183,56 @@ const Profile = () => {
                 </div>
             </div>
             <div className="grid grid-cols-3 gap-6">
-                <div className="bg-white drop-shadow-md p-8 rounded-lg col-span-1 flex flex-col gap-2">
-                    <h2 className="font-bold text-xl">FOLLOWERS</h2>
-                    {!(profile.followers.length === 0) ? (
-                        profile.followers.map((follower) => (
-                            <div
-                                key={follower._id}
-                                className="flex gap-4 items-center cursor-pointer hover:bg-gray-200 py-2 rounded-md"
-                                onClick={() =>
-                                    navigate(`/profile/${follower._id}}`)
-                                }>
-                                <img src={userPicture} alt="" className="w-8" />
-                                <p className="text-lg">{follower.username}</p>
-                            </div>
-                        ))
-                    ) : (
-                        <div className="py-2 italic">No followers yet</div>
-                    )}
+                <div className="bg-white drop-shadow-md rounded-xl col-span-1 flex flex-col gap-2">
+                    <div className="bg-slate-900 p-4 rounded-t-xl">
+                        <h2 className="font-bold text-xl text-white">
+                            FOLLOWERS
+                        </h2>
+                    </div>
+                    <div className="px-4 mb-4">
+                        {!(profile.followers.length === 0) ? (
+                            profile.followers.map((follower) => (
+                                <div
+                                    key={follower._id}
+                                    className="flex gap-4 items-center py-2 rounded-md">
+                                    <div
+                                        onClick={() =>
+                                            navigate(`/profile/${follower._id}`)
+                                        }
+                                        className="cursor-pointer">
+                                        <img
+                                            src={userPicture}
+                                            alt=""
+                                            className="w-8"
+                                        />
+                                    </div>
+                                    <Link
+                                        className="text-lg hover:text-blue-800 hover:underline"
+                                        to={`/profile/${follower._id}`}>
+                                        {follower.username}
+                                    </Link>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="py-2 italic">No followers yet</div>
+                        )}
+                    </div>
                 </div>
-                <div className="bg-white drop-shadow-md p-8 rounded-lg col-span-2 flex flex-col gap-2">
-                    <h2 className="font-bold text-xl">RECENT ACTIVITY</h2>
-                    {!(profile.posts.length === 0) ? (
-                        profile.posts.map((post) => (
-                            <div key={post._id}>{post.text}</div>
-                        ))
-                    ) : (
-                        <div className="py-2 italic">No posts yet</div>
-                    )}
+                <div className="bg-white drop-shadow-md rounded-xl col-span-2 flex flex-col gap-2">
+                    <div className="bg-slate-900 p-4 rounded-t-xl">
+                        <h2 className="font-bold text-xl text-white">
+                            RECENT ACTIVITY
+                        </h2>
+                    </div>
+                    <div className="px-4 mb-4">
+                        {!(profile.posts.length === 0) ? (
+                            profile.posts.map((post) => (
+                                <div key={post._id}>{post.text}</div>
+                            ))
+                        ) : (
+                            <div className="py-2 italic">No posts yet</div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@ import Signup from './components/Signup/Signup'
 import Users from './components/Users/Users'
 import Profile from './components/Profile/Profile'
 import Posts from './components/Posts/Posts'
+import NewEntry from './components/NewEntry/NewEntry'
 import { createContext } from 'react'
 import {
     BrowserRouter as Router,
@@ -20,18 +21,6 @@ export const UserContext = createContext()
 export const TokenContext = createContext()
 
 const App = () => {
-    // const [user, setUser] = useState(false)
-
-    // useEffect(() => {
-    //     const isUser = localStorage.getItem('user')
-
-    //     if (isUser) {
-    //         setUser(isUser)
-    //     } else {
-    //         setUser(false)
-    //     }
-    // }, [])
-
     const { token, addToken, removeToken } = useToken()
     const { addCurrentUser, currentUser, removeCurrentUser } = useUser()
 
@@ -84,6 +73,16 @@ const App = () => {
                                         <Navigate replace to="/login" />
                                     ) : (
                                         <Posts />
+                                    )
+                                }
+                            />
+                            <Route
+                                path="/new"
+                                element={
+                                    !currentUser ? (
+                                        <Navigate replace to="/login" />
+                                    ) : (
+                                        <NewEntry />
                                     )
                                 }
                             />

@@ -6,7 +6,7 @@ const UserCard = ({ user, currentUser, handleFollow, handleUnfollow }) => {
 
     return (
         <div
-            className="flex justify-between bg-white p-5 cursor-pointer drop-shadow-md rounded-md hover:bg-slate-200"
+            className="flex justify-between bg-white p-5 cursor-pointer drop-shadow-md rounded-xl hover:bg-slate-200"
             key={user._id}
             onClick={() => navigate(`/profile/${user._id}`)}>
             <div className="flex gap-2 items-center">
