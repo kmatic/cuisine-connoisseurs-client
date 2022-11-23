@@ -5,14 +5,15 @@ import { FiEdit2 } from 'react-icons/fi'
 import moment from 'moment'
 
 const Profile = ({ user }) => {
+    const { id } = useParams()
+    const navigate = useNavigate()
+
     const [profile, setProfile] = useState({
         followers: [],
         posts: [],
     })
-    const [editMode, setEditMode] = useState(false)
-    const { id } = useParams()
-    const navigate = useNavigate()
 
+    const [editMode, setEditMode] = useState(false)
     const [city, setCity] = useState('')
     const [message, setMessage] = useState('')
 
@@ -47,10 +48,6 @@ const Profile = ({ user }) => {
         }
     }
 
-    function handleRedirect(id) {
-        navigate(`/profile/${id}`)
-    }
-
     useEffect(() => {
         async function getProfile() {
             try {
@@ -67,8 +64,6 @@ const Profile = ({ user }) => {
 
         getProfile()
     }, [id])
-
-    console.log(profile)
 
     return (
         <div className="container mx-auto my-10 flex flex-col gap-6">
@@ -193,7 +188,9 @@ const Profile = ({ user }) => {
                             <div
                                 key={follower._id}
                                 className="flex gap-4 items-center cursor-pointer hover:bg-gray-200 py-2 rounded-md"
-                                onClick={() => handleRedirect(follower._id)}>
+                                onClick={() =>
+                                    navigate(`/profile/${follower._id}}`)
+                                }>
                                 <img src={userPicture} alt="" className="w-8" />
                                 <p className="text-lg">{follower.username}</p>
                             </div>
