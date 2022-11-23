@@ -59,6 +59,51 @@ const Users = ({ currentUser, setCurrentUser }) => {
         }
     }
 
+    async function handleUnfollow(e, user) {
+        e.stopPropagation()
+        if (
+            !user.followers.includes(currentUser._id) ||
+            !currentUser.following.includes(user._id)
+        ) {
+            return
+        }
+
+        // followed users new followers with current users id included
+        const newUserFollowers = user.followers.filter(
+            (id) => id !== currentUser._id
+        )
+
+        // current users following with followed user id included
+        const newCurrentUserFollowing = currentUser.following.filter(
+            (id) => id !== user._id
+        )
+
+        const token = localStorage.getItem('token')
+        try {
+            const res = await fetch(
+                `http://localhost:5000/api/profile/${user._id}/unfollow`,
+                {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        followers: newUserFollowers,
+                        following: newCurrentUserFollowing,
+                        user: currentUser._id,
+                    }),
+                }
+            )
+            if (res.status !== 200) return console.error('Something went wrong')
+            const data = await res.json()
+            setCurrentUser(data.user)
+            console.log(data)
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
     function handleSearch(e) {
         const results = users.filter((user) => {
             if (e.target.value === '') return users
@@ -106,6 +151,7 @@ const Users = ({ currentUser, setCurrentUser }) => {
                                 user={user}
                                 currentUser={currentUser}
                                 handleFollow={handleFollow}
+                                handleUnfollow={handleUnfollow}
                             />
                         ))
                     )}

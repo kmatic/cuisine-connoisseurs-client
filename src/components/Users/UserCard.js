@@ -1,10 +1,8 @@
 import defaultProfile from '../../assets/defaultUserImg.png'
 import { useNavigate } from 'react-router-dom'
 
-const UserCard = ({ user, currentUser, handleFollow }) => {
+const UserCard = ({ user, currentUser, handleFollow, handleUnfollow }) => {
     const navigate = useNavigate()
-
-    console.log(currentUser)
 
     return (
         <div
@@ -17,13 +15,13 @@ const UserCard = ({ user, currentUser, handleFollow }) => {
             </div>
             {currentUser.following.includes(user._id) ? (
                 <button
-                    className="bg-gray-400 text-white text-xs px-2 font-semibold rounded-md"
-                    disabled>
+                    className="bg-gray-400 text-white text-xs px-2 font-semibold rounded-md hover:bg-red-600"
+                    onClick={(e) => handleUnfollow(e, user)}>
                     FOLLOWED
                 </button>
             ) : !(currentUser._id === user._id) ? (
                 <button
-                    className="bg-slate-900 text-white text-xs px-2 font-semibold rounded-md flex items-center gap-1 hover:brightness-150"
+                    className="bg-slate-900 text-white text-xs px-2 font-semibold rounded-md flex items-center gap-1 hover:bg-green-600"
                     onClick={(e) => handleFollow(e, user)}>
                     FOLLOW +
                 </button>
