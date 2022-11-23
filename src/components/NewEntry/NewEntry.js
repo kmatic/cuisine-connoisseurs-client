@@ -35,20 +35,20 @@ const NewEntry = () => {
     }
 
     return (
-        <div className="container mx-auto bg-white flex flex-col max-w-sm p-6 drop-shadow-lg rounded-md gap-8 my-10">
+        <div className="container mx-auto my-10 flex max-w-sm flex-col gap-8 rounded-md bg-white p-6 drop-shadow-lg">
             <form
                 className="flex flex-col gap-3"
                 onSubmit={(e) => handleSubmit(e)}>
                 <input
                     type="text"
-                    className="p-2 rounded bg-gray-100"
+                    className="rounded bg-gray-100 p-2"
                     placeholder="I went to..."
                     value={restaurant}
                     onChange={(e) => setRestaurant(e.target.value)}
                 />
                 <textarea
                     placeholder="Add a review..."
-                    className="bg-gray-100 p-2 rounded"
+                    className="rounded bg-gray-100 p-2"
                     value={review}
                     onChange={(e) => setReview(e.target.value)}
                 />
@@ -72,7 +72,7 @@ const NewEntry = () => {
                             </button>
                         )} */}
                 </div>
-                <button className="bg-blue-700 text-white text-sm font-semibold rounded py-1 px-4 self-end">
+                <button className="self-end rounded bg-blue-700 py-1 px-4 text-sm font-semibold text-white">
                     SAVE
                 </button>
             </form>

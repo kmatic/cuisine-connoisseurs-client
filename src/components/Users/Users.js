@@ -129,7 +129,7 @@ const Users = () => {
                     <input
                         type="text"
                         placeholder="Find a user"
-                        className="bg-inherit focus:outline-none pb-1"
+                        className="bg-inherit pb-1 focus:outline-none"
                         value={search.query}
                         onChange={handleSearch}
                     />
@@ -137,12 +137,12 @@ const Users = () => {
                 </div>
             </section>
             <section>
-                <h3 className="font-bold text-lg">
+                <h3 className="text-lg font-bold">
                     Find others in the CuisineConnoisseurs community:
                 </h3>
-                <div className="grid grid-cols-2 gap-4 max-w-3xl my-8">
+                <div className="my-8 grid max-w-3xl grid-cols-2 gap-4">
                     {!search.filtered.length ? (
-                        <span className="font-semibold col-span-2">
+                        <span className="col-span-2 font-semibold">
                             No users found with the name "{search.query}"...
                         </span>
                     ) : (
