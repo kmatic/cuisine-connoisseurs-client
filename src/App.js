@@ -6,79 +6,92 @@ import Signup from './components/Signup/Signup'
 import Users from './components/Users/Users'
 import Profile from './components/Profile/Profile'
 import Posts from './components/Posts/Posts'
-import { useState, useEffect } from 'react'
+import { createContext } from 'react'
 import {
     BrowserRouter as Router,
     Routes,
     Route,
     Navigate,
 } from 'react-router-dom'
+import useToken from './components/Hooks/useToken'
+import useUser from './components/Hooks/useUser'
+
+export const UserContext = createContext()
+export const TokenContext = createContext()
 
 const App = () => {
-    const [user, setUser] = useState(false)
+    // const [user, setUser] = useState(false)
 
-    useEffect(() => {
-        const isUser = localStorage.getItem('user')
+    // useEffect(() => {
+    //     const isUser = localStorage.getItem('user')
 
-        if (isUser) {
-            setUser(isUser)
-        } else {
-            setUser(false)
-        }
-    }, [])
+    //     if (isUser) {
+    //         setUser(isUser)
+    //     } else {
+    //         setUser(false)
+    //     }
+    // }, [])
+
+    const { token, addToken, removeToken } = useToken()
+    const { addCurrentUser, currentUser, removeCurrentUser } = useUser()
+
+    console.log(currentUser)
 
     return (
         <Router basename="/">
-            <Header user={user} setUser={setUser} />
-            <main>
-                <Routes>
-                    <Route
-                        path="/"
-                        element={
-                            !user ? (
-                                <Landing />
-                            ) : (
-                                <Navigate replace to="/posts" />
-                            )
-                        }
-                    />
-                    <Route
-                        path="/login"
-                        element={<Login user={user} setUser={setUser} />}
-                    />
-                    <Route path="/signup" element={<Signup user={user} />} />
-                    <Route
-                        path="/users"
-                        element={
-                            !user ? (
-                                <Navigate replace to="/login" />
-                            ) : (
-                                <Users
-                                    currentUser={user}
-                                    setCurrentUser={setUser}
-                                />
-                            )
-                        }
-                    />
-                    <Route
-                        path="/profile/:id"
-                        element={
-                            !user ? (
-                                <Navigate replace to="/login" />
-                            ) : (
-                                <Profile user={user} />
-                            )
-                        }
-                    />
-                    <Route
-                        path="/posts"
-                        element={
-                            !user ? <Navigate replace to="/login" /> : <Posts />
-                        }
-                    />
-                </Routes>
-            </main>
-            {/* <Footer /> */}
+            <TokenContext.Provider value={{ token, addToken, removeToken }}>
+                <UserContext.Provider
+                    value={{ addCurrentUser, currentUser, removeCurrentUser }}>
+                    <Header />
+                    <main>
+                        <Routes>
+                            <Route
+                                path="/"
+                                element={
+                                    !currentUser ? (
+                                        <Landing />
+                                    ) : (
+                                        <Navigate replace to="/posts" />
+                                    )
+                                }
+                            />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/signup" element={<Signup />} />
+                            <Route
+                                path="/users"
+                                element={
+                                    !currentUser ? (
+                                        <Navigate replace to="/login" />
+                                    ) : (
+                                        <Users currentUser={currentUser} />
+                                    )
+                                }
+                            />
+                            <Route
+                                path="/profile/:id"
+                                element={
+                                    !currentUser ? (
+                                        <Navigate replace to="/login" />
+                                    ) : (
+                                        <Profile />
+                                    )
+                                }
+                            />
+                            <Route
+                                path="/posts"
+                                element={
+                                    !currentUser ? (
+                                        <Navigate replace to="/login" />
+                                    ) : (
+                                        <Posts />
+                                    )
+                                }
+                            />
+                        </Routes>
+                    </main>
+                    {/* <Footer /> */}
+                </UserContext.Provider>
+            </TokenContext.Provider>
         </Router>
     )
 }

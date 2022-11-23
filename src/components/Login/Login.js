@@ -1,10 +1,13 @@
 import { BiFoodMenu } from 'react-icons/bi'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
+import { TokenContext, UserContext } from '../../App'
 
-const Login = ({ user, setUser }) => {
+const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const { addCurrentUser, currentUser } = useContext(UserContext)
+    const { addToken } = useContext(TokenContext)
 
     async function handleLogin(e) {
         e.preventDefault()
@@ -22,15 +25,14 @@ const Login = ({ user, setUser }) => {
             if (res.status !== 200)
                 return console.error('Wrong username or password')
             const data = await res.json()
-            localStorage.setItem('user', data.user)
-            localStorage.setItem('token', data.token)
-            setUser(data.user)
+            addCurrentUser(data.user)
+            addToken(data.token)
         } catch (err) {
             console.error(err)
         }
     }
 
-    if (!user) {
+    if (!currentUser) {
         return (
             <div className="container mx-auto bg-white flex items-center flex-col max-w-sm p-6 drop-shadow-lg rounded-md gap-8 my-10">
                 <div className="flex gap-1">

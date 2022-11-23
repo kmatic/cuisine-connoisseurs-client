@@ -1,12 +1,16 @@
+import { useContext } from 'react'
 import { BiFoodMenu } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
+import { TokenContext, UserContext } from '../App'
 
-const Header = ({ user, setUser }) => {
+const Header = () => {
+    const { currentUser, removeCurrentUser } = useContext(UserContext)
+    const { removeToken } = useContext(TokenContext)
+
     function logout(e) {
         e.preventDefault()
-        setUser(false)
-        localStorage.removeItem('user')
-        localStorage.removeItem('token')
+        removeCurrentUser()
+        removeToken()
     }
 
     return (
@@ -19,7 +23,7 @@ const Header = ({ user, setUser }) => {
                     </h1>
                 </Link>
                 <ul className="flex font-semibold text-base gap-6 text-slate-300">
-                    {!user ? (
+                    {!currentUser ? (
                         <>
                             <li className="hover:text-white">
                                 <Link to="/login">Login</Link>
@@ -37,7 +41,9 @@ const Header = ({ user, setUser }) => {
                                 <Link to="/users">Find Friends</Link>
                             </li>
                             <li className="hover:text-white">
-                                <Link to={`/profile/${user._id}`}>Profile</Link>
+                                <Link to={`/profile/${currentUser._id}`}>
+                                    Profile
+                                </Link>
                             </li>
                             <li className="hover:text-white">
                                 <button onClick={logout}>Logout</button>

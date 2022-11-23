@@ -6,19 +6,19 @@ const useUser = () => {
         return user
     }
 
-    const [user, setUser] = useState(getUser())
+    const [currentUser, setCurrentUser] = useState(getUser())
 
-    const addUser = (user) => {
+    const addCurrentUser = (user) => {
         localStorage.setItem('user', user)
-        setUser(user)
+        setCurrentUser(user)
     }
 
-    const removeUser = () => {
+    const removeCurrentUser = () => {
         localStorage.removeItem('user')
-        setUser(null)
+        setCurrentUser(null)
     }
 
-    return { addUser, user, removeUser }
+    return { addCurrentUser, currentUser, removeCurrentUser }
 }
 
 export default useUser

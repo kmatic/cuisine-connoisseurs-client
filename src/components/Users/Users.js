@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { BsSearch } from 'react-icons/bs'
+import { TokenContext, UserContext } from '../../App'
 import UserCard from './UserCard'
 
-const Users = ({ currentUser, setCurrentUser }) => {
+const Users = () => {
+    const { token } = useContext(TokenContext)
+    const { currentUser, addCurrentUser } = useContext(UserContext)
     const [users, setUsers] = useState([])
     const [search, setSearch] = useState({
         query: '',
@@ -33,7 +36,6 @@ const Users = ({ currentUser, setCurrentUser }) => {
         }
         const followers = [...user.followers, currentUser._id]
         const following = [...currentUser.following, user._id]
-        const token = localStorage.getItem('token')
         try {
             const res = await fetch(
                 `http://localhost:5000/api/profile/${user._id}/follow`,
@@ -52,7 +54,7 @@ const Users = ({ currentUser, setCurrentUser }) => {
             )
             if (res.status !== 200) return console.error('Something went wrong')
             const data = await res.json()
-            setCurrentUser(data.user)
+            addCurrentUser(data.user)
             console.log(data)
         } catch (err) {
             console.error(err)
@@ -78,7 +80,6 @@ const Users = ({ currentUser, setCurrentUser }) => {
             (id) => id !== user._id
         )
 
-        const token = localStorage.getItem('token')
         try {
             const res = await fetch(
                 `http://localhost:5000/api/profile/${user._id}/unfollow`,
@@ -97,7 +98,7 @@ const Users = ({ currentUser, setCurrentUser }) => {
             )
             if (res.status !== 200) return console.error('Something went wrong')
             const data = await res.json()
-            setCurrentUser(data.user)
+            addCurrentUser(data.user)
             console.log(data)
         } catch (err) {
             console.error(err)

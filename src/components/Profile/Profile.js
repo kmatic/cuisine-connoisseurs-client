@@ -1,11 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import userPicture from '../../assets/defaultUserImg.png'
 import { FiEdit2 } from 'react-icons/fi'
 import moment from 'moment'
+import { TokenContext, UserContext } from '../../App'
 
-const Profile = ({ user }) => {
+const Profile = () => {
     const { id } = useParams()
+    const { currentUser } = useContext(UserContext)
+    const { token } = useContext(TokenContext)
     const navigate = useNavigate()
 
     const [profile, setProfile] = useState({
@@ -24,7 +27,6 @@ const Profile = ({ user }) => {
     }
 
     async function handleSave() {
-        const token = localStorage.getItem('token')
         try {
             const res = await fetch(`http://localhost:5000/api/profile/${id}`, {
                 method: 'PATCH',
@@ -79,7 +81,7 @@ const Profile = ({ user }) => {
                         <div className="flex flex-col gap-2">
                             <div className="flex justify-between border-b py-2">
                                 <h2 className="font-bold text-xl">ABOUT ME</h2>
-                                {user._id === id && (
+                                {currentUser._id === id && (
                                     <button
                                         className="bg-slate-900 text-white text-xs px-2 font-semibold rounded-md flex items-center gap-1 hover:brightness-150"
                                         onClick={handleEditMode}>
@@ -119,7 +121,7 @@ const Profile = ({ user }) => {
                         <div className="flex flex-col gap-2">
                             <div className="flex justify-between border-b py-2">
                                 <h2 className="font-bold text-xl">ABOUT ME</h2>
-                                {user._id === id && (
+                                {currentUser._id === id && (
                                     <div className="flex gap-2">
                                         <button
                                             className="bg-red-500 text-white text-xs px-2 font-semibold rounded-md flex items-center gap-1 hover:brightness-125"
