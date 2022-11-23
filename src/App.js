@@ -3,11 +3,16 @@ import Footer from './components/Footer'
 import Landing from './components/Landing/Landing'
 import Login from './components/Login/Login'
 import Signup from './components/Signup/Signup'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { useState, useEffect } from 'react'
 import Users from './components/Users/Users'
 import Profile from './components/Profile/Profile'
 import Posts from './components/Posts/Posts'
+import { useState, useEffect } from 'react'
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Navigate,
+} from 'react-router-dom'
 
 const App = () => {
     const [user, setUser] = useState(false)
@@ -27,7 +32,16 @@ const App = () => {
             <Header user={user} setUser={setUser} />
             <main>
                 <Routes>
-                    <Route path="/" element={<Landing />} />
+                    <Route
+                        path="/"
+                        element={
+                            !user ? (
+                                <Landing />
+                            ) : (
+                                <Navigate replace to="/posts" />
+                            )
+                        }
+                    />
                     <Route
                         path="/login"
                         element={<Login user={user} setUser={setUser} />}
@@ -36,17 +50,32 @@ const App = () => {
                     <Route
                         path="/users"
                         element={
-                            <Users
-                                currentUser={user}
-                                setCurrentUser={setUser}
-                            />
+                            !user ? (
+                                <Navigate replace to="/login" />
+                            ) : (
+                                <Users
+                                    currentUser={user}
+                                    setCurrentUser={setUser}
+                                />
+                            )
                         }
                     />
                     <Route
                         path="/profile/:id"
-                        element={<Profile user={user} />}
+                        element={
+                            !user ? (
+                                <Navigate replace to="/login" />
+                            ) : (
+                                <Profile user={user} />
+                            )
+                        }
                     />
-                    <Route path="/posts" element={<Posts />} />
+                    <Route
+                        path="/posts"
+                        element={
+                            !user ? <Navigate replace to="/login" /> : <Posts />
+                        }
+                    />
                 </Routes>
             </main>
             {/* <Footer /> */}

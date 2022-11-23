@@ -202,8 +202,15 @@ const Profile = ({ user }) => {
                         <div className="py-2 italic">No followers yet</div>
                     )}
                 </div>
-                <div className="bg-white drop-shadow-md p-8 rounded-lg col-span-2">
+                <div className="bg-white drop-shadow-md p-8 rounded-lg col-span-2 flex flex-col gap-2">
                     <h2 className="font-bold text-xl">RECENT ACTIVITY</h2>
+                    {!(profile.posts.length === 0) ? (
+                        profile.posts.map((post) => (
+                            <div key={post._id}>{post.text}</div>
+                        ))
+                    ) : (
+                        <div className="py-2 italic">No posts yet</div>
+                    )}
                 </div>
             </div>
         </div>
