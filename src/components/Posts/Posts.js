@@ -79,6 +79,7 @@ const Posts = () => {
                             key={post._id}
                             post={post}
                             currentUser={currentUser}
+                            token={token}
                             handleLike={handleLike}
                         />
                     ))}

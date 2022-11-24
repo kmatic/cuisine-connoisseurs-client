@@ -41,14 +41,14 @@ const NewEntry = () => {
                 onSubmit={(e) => handleSubmit(e)}>
                 <input
                     type="text"
-                    className="rounded bg-gray-100 p-2"
+                    className="rounded border bg-gray-100 p-2 focus:border-blue-500 focus:outline-none"
                     placeholder="I went to..."
                     value={restaurant}
                     onChange={(e) => setRestaurant(e.target.value)}
                 />
                 <textarea
                     placeholder="Add a review..."
-                    className="rounded bg-gray-100 p-2"
+                    className="rounded border bg-gray-100 p-2 focus:border-blue-500 focus:outline-none"
                     value={review}
                     onChange={(e) => setReview(e.target.value)}
                 />
