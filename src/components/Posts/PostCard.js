@@ -3,7 +3,7 @@ import ReactStars from 'react-rating-stars-component'
 import moment from 'moment'
 import { FaHeart } from 'react-icons/fa'
 import { useState } from 'react'
-import defaultProfile from '../../assets/defaultUserImg.png'
+import Comment from './Comment'
 
 const PostCard = ({ post, currentUser, handleLike, token }) => {
     const [comments, setComments] = useState([])
@@ -114,24 +114,7 @@ const PostCard = ({ post, currentUser, handleLike, token }) => {
             {show && (
                 <div>
                     {comments.map((comment) => (
-                        <div className="flex gap-10 border-t-2 py-3">
-                            <div className="gap flex items-center gap-1">
-                                <img
-                                    src={defaultProfile}
-                                    alt=""
-                                    className="w-6"
-                                />
-                                <div className="flex flex-col">
-                                    <Link className="text-sm">
-                                        {comment.user.username}
-                                    </Link>
-                                    <span className="text-xs">
-                                        {comment.timestamp}
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="self-center">{comment.text}</div>
-                        </div>
+                        <Comment key={comment._id} comment={comment} />
                     ))}
                     <form
                         className="flex flex-col gap-4"
