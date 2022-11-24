@@ -23,9 +23,14 @@ const Posts = () => {
     }
 
     async function handleLike(post) {
-        if (post.likes.includes(currentUser._id)) return
+        let newLikes = []
 
-        const newLikes = [...post.likes, currentUser._id]
+        if (post.likes.includes(currentUser._id)) {
+            newLikes = post.likes.filter((id) => id !== currentUser._id)
+        } else {
+            newLikes = [...post.likes, currentUser._id]
+        }
+
         try {
             const res = await fetch(
                 `http://localhost:5000/api/posts/${post._id}/like`,
@@ -101,12 +106,23 @@ const Posts = () => {
                             <p>{post.description}</p>
                             <div className="mt-2 flex items-center gap-2 text-sm text-slate-600">
                                 <div
-                                    className="flex cursor-pointer items-center gap-1  hover:brightness-125"
+                                    className="flex cursor-pointer items-center gap-1 hover:brightness-125"
                                     onClick={() => handleLike(post)}>
-                                    <FaHeart />
-                                    <span className="font-semibold">
-                                        Like review
-                                    </span>
+                                    {!post.likes.includes(currentUser._id) ? (
+                                        <>
+                                            <FaHeart />
+                                            <span className="font-semibold">
+                                                Like review
+                                            </span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <FaHeart className="text-red-600" />
+                                            <span className="font-semibold">
+                                                Liked
+                                            </span>
+                                        </>
+                                    )}
                                 </div>
                                 <div>
                                     {post.likes.length !== 0 && (
