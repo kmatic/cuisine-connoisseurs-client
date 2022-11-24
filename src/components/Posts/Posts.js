@@ -1,9 +1,7 @@
-import { useNavigate, Link } from 'react-router-dom'
-import ReactStars from 'react-rating-stars-component'
+import { useNavigate } from 'react-router-dom'
 import { useContext, useEffect, useState } from 'react'
-import { FaHeart } from 'react-icons/fa'
-import moment from 'moment'
 import { TokenContext, UserContext } from '../../App'
+import PostCard from './PostCard'
 
 const Posts = () => {
     const [posts, setPosts] = useState([])
@@ -77,65 +75,12 @@ const Posts = () => {
                 <h3 className="text-lg font-semibold">RECENT REVIEWS</h3>
                 <div>
                     {posts.map((post) => (
-                        <div key={post._id} className="border-t-2 py-3">
-                            <div className="mb-2 inline-block text-sm text-slate-600 hover:brightness-150">
-                                <Link className="font-bold">
-                                    {post.user.username}{' '}
-                                </Link>
-                                <span>ate at...</span>
-                            </div>
-                            <h4 className="text-xl font-bold">
-                                {post.restaurant}
-                            </h4>
-                            <div className="flex items-center gap-2">
-                                <ReactStars
-                                    count={5}
-                                    size={24}
-                                    isHalf={true}
-                                    activeColor="#38BDF8"
-                                    value={post.rating}
-                                    edit={false}
-                                />
-                                <span className="text-sm text-slate-600">
-                                    Posted on{' '}
-                                    {moment(post.timestamp).format(
-                                        'YYYY-MM-DD'
-                                    )}
-                                </span>
-                            </div>
-                            <p>{post.description}</p>
-                            <div className="mt-2 flex items-center gap-2 text-sm text-slate-600">
-                                <div
-                                    className="flex cursor-pointer items-center gap-1 hover:brightness-125"
-                                    onClick={() => handleLike(post)}>
-                                    {!post.likes.includes(currentUser._id) ? (
-                                        <>
-                                            <FaHeart />
-                                            <span className="font-semibold">
-                                                Like review
-                                            </span>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <FaHeart className="text-red-600" />
-                                            <span className="font-semibold">
-                                                Liked
-                                            </span>
-                                        </>
-                                    )}
-                                </div>
-                                <div>
-                                    {post.likes.length !== 0 && (
-                                        <span>
-                                            {post.likes.length}{' '}
-                                            {post.likes.length === 1
-                                                ? 'like'
-                                                : 'likes'}
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
+                        <PostCard
+                            key={post._id}
+                            post={post}
+                            currentUser={currentUser}
+                            handleLike={handleLike}
+                        />
                     ))}
                 </div>
             </div>
