@@ -1,11 +1,16 @@
 import { useNavigate, Link } from 'react-router-dom'
 import ReactStars from 'react-rating-stars-component'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { FaHeart } from 'react-icons/fa'
+import moment from 'moment'
+import { TokenContext, UserContext } from '../../App'
 
 const Posts = () => {
     const [posts, setPosts] = useState([])
     const navigate = useNavigate()
+
+    const { currentUser } = useContext(UserContext)
+    const { token } = useContext(TokenContext)
 
     async function getPosts() {
         try {
@@ -17,7 +22,37 @@ const Posts = () => {
         }
     }
 
-    function handleLike() {}
+    async function handleLike(post) {
+        if (post.likes.includes(currentUser._id)) return
+
+        const newLikes = [...post.likes, currentUser._id]
+        try {
+            const res = await fetch(
+                `http://localhost:5000/api/posts/${post._id}/like`,
+                {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        likes: newLikes,
+                    }),
+                }
+            )
+            if (res.status !== 200) return console.error('Something went wrong')
+            const data = await res.json()
+            const updatedPosts = posts.map((updatedPost) => {
+                if (updatedPost._id === data.post._id) {
+                    return data.post
+                }
+                return updatedPost
+            })
+            setPosts(updatedPosts)
+        } catch (err) {
+            console.error(err)
+        }
+    }
 
     useEffect(() => {
         getPosts()
@@ -40,9 +75,9 @@ const Posts = () => {
                         <div key={post._id} className="border-t-2 py-3">
                             <div className="mb-2 inline-block text-sm text-slate-600 hover:brightness-150">
                                 <Link className="font-bold">
-                                    {post.user.username}
+                                    {post.user.username}{' '}
                                 </Link>
-                                <span> ate at...</span>
+                                <span>ate at...</span>
                             </div>
                             <h4 className="text-xl font-bold">
                                 {post.restaurant}
@@ -56,18 +91,33 @@ const Posts = () => {
                                     value={post.rating}
                                     edit={false}
                                 />
-                                <p className="text-sm text-slate-600">
-                                    Posted on {post.timestamp}
-                                </p>
+                                <span className="text-sm text-slate-600">
+                                    Posted on{' '}
+                                    {moment(post.timestamp).format(
+                                        'YYYY-MM-DD'
+                                    )}
+                                </span>
                             </div>
                             <p>{post.description}</p>
-                            <div
-                                className="mt-2 flex cursor-pointer items-center gap-1 text-sm text-slate-600 hover:brightness-125"
-                                onClick={() => handleLike()}>
-                                <FaHeart />
-                                <span className="font-semibold">
-                                    Like review
-                                </span>
+                            <div className="mt-2 flex items-center gap-2 text-sm text-slate-600">
+                                <div
+                                    className="flex cursor-pointer items-center gap-1  hover:brightness-125"
+                                    onClick={() => handleLike(post)}>
+                                    <FaHeart />
+                                    <span className="font-semibold">
+                                        Like review
+                                    </span>
+                                </div>
+                                <div>
+                                    {post.likes.length !== 0 && (
+                                        <span>
+                                            {post.likes.length}{' '}
+                                            {post.likes.length === 1
+                                                ? 'like'
+                                                : 'likes'}
+                                        </span>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     ))}
