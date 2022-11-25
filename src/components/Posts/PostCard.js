@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import ReactStars from 'react-rating-stars-component'
 import moment from 'moment'
 import { FaHeart } from 'react-icons/fa'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Comment from './Comment'
 
 const PostCard = ({ post, currentUser, handleLike, token }) => {
@@ -10,23 +10,9 @@ const PostCard = ({ post, currentUser, handleLike, token }) => {
     const [show, setShow] = useState(false)
     const [commentText, setCommentText] = useState('')
 
-    async function getComments() {
-        try {
-            const res = await fetch(
-                `http://localhost:5000/api/posts/${post._id}/comments`
-            )
-            const data = await res.json()
-            setComments(data.comments)
-        } catch (err) {
-            console.error(err)
-        }
-    }
-
-    console.log(comments)
-
     function handleComments() {
-        getComments()
-        setShow(true)
+        // getComments()
+        setShow(!show)
     }
 
     async function handleSubmit(e) {
@@ -48,11 +34,28 @@ const PostCard = ({ post, currentUser, handleLike, token }) => {
             )
             if (res.status !== 200) return console.error('Something went wrong')
             const data = await res.json()
-            console.log(data)
+            const updatedComments = [...comments, data.comment]
+            setComments(updatedComments)
         } catch (err) {
             console.error(err)
         }
     }
+
+    useEffect(() => {
+        async function getComments() {
+            try {
+                const res = await fetch(
+                    `http://localhost:5000/api/posts/${post._id}/comments`
+                )
+                const data = await res.json()
+                setComments(data.comments)
+            } catch (err) {
+                console.error(err)
+            }
+        }
+
+        getComments()
+    }, [post._id])
 
     return (
         <div className="border-t-2 py-3">
@@ -108,20 +111,30 @@ const PostCard = ({ post, currentUser, handleLike, token }) => {
                 <div
                     className="cursor-pointer font-semibold hover:brightness-150"
                     onClick={() => handleComments()}>
-                    Leave a comment...
+                    {comments.length !== 0
+                        ? `${comments.length} comments`
+                        : comments.length === 1
+                        ? 'comment'
+                        : 'Leave a comment...'}
                 </div>
             </div>
             {show && (
                 <div>
-                    {comments.map((comment) => (
-                        <Comment key={comment._id} comment={comment} />
-                    ))}
+                    {comments.length !== 0 ? (
+                        comments.map((comment) => (
+                            <Comment key={comment._id} comment={comment} />
+                        ))
+                    ) : (
+                        <div className="border-t-2 py-4 italic">
+                            There are no comments yet! Be the first
+                        </div>
+                    )}
                     <form
                         className="flex flex-col gap-4"
                         onSubmit={(e) => handleSubmit(e)}>
                         <textarea
                             placeholder={`Reply as ${currentUser.username}...`}
-                            className="w-full max-w-xl self-end rounded border p-2 drop-shadow focus:border-blue-500 focus:outline-none"
+                            className="h-28 w-full max-w-xl self-end rounded border p-2 text-sm drop-shadow focus:border-blue-500 focus:outline-none"
                             value={commentText}
                             onChange={(e) => setCommentText(e.target.value)}
                         />

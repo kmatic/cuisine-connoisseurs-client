@@ -46,9 +46,7 @@ const Posts = () => {
             if (res.status !== 200) return console.error('Something went wrong')
             const data = await res.json()
             const updatedPosts = posts.map((updatedPost) => {
-                if (updatedPost._id === data.post._id) {
-                    return data.post
-                }
+                if (updatedPost._id === data.post._id) return data.post
                 return updatedPost
             })
             setPosts(updatedPosts)
