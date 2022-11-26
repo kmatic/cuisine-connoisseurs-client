@@ -36,6 +36,31 @@ const PostCard = ({ post, currentUser, handleLike, token }) => {
             const data = await res.json()
             const updatedComments = [...comments, data.comment]
             setComments(updatedComments)
+            setCommentText('')
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    async function handleDelete(e, commentId) {
+        e.preventDefault()
+        try {
+            const res = await fetch(
+                `http://localhost:5000/api/posts/${post._id}/comments/${commentId}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            if (res.status !== 200) return console.error('Something went wrong')
+            const data = await res.json()
+            const updatedComments = comments.filter(
+                (comment) => comment._id !== data.deletedComment._id
+            )
+            setComments(updatedComments)
         } catch (err) {
             console.error(err)
         }
@@ -122,7 +147,12 @@ const PostCard = ({ post, currentUser, handleLike, token }) => {
                 <div>
                     {comments.length !== 0 ? (
                         comments.map((comment) => (
-                            <Comment key={comment._id} comment={comment} />
+                            <Comment
+                                key={comment._id}
+                                comment={comment}
+                                currentUser={currentUser}
+                                handleDelete={handleDelete}
+                            />
                         ))
                     ) : (
                         <div className="border-t-2 py-4 italic">

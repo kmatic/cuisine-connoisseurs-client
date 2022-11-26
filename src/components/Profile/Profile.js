@@ -119,7 +119,7 @@ const Profile = () => {
                         </div>
                     ) : (
                         <div className="flex flex-col gap-2">
-                            <div className="flex justify-between border-b py-2">
+                            <div className="flex border-b py-2">
                                 <h2 className="text-xl font-bold">ABOUT ME</h2>
                                 {currentUser._id === id && (
                                     <div className="flex gap-2">
