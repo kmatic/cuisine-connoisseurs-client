@@ -55,6 +55,29 @@ const Posts = () => {
         }
     }
 
+    async function handleDeletePost(postId) {
+        try {
+            const res = await fetch(
+                `http://localhost:5000/api/posts/${postId}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            if (res.status !== 200) return console.error('Something went wrong')
+            const data = await res.json()
+            const updatedPosts = posts.filter(
+                (post) => post._id !== data.deletedPost._id
+            )
+            setPosts(updatedPosts)
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
     useEffect(() => {
         getPosts()
     }, [])
@@ -79,6 +102,7 @@ const Posts = () => {
                             currentUser={currentUser}
                             token={token}
                             handleLike={handleLike}
+                            handleDeletePost={handleDeletePost}
                         />
                     ))}
                 </div>

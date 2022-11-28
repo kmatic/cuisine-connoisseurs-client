@@ -2,10 +2,17 @@ import { Link } from 'react-router-dom'
 import ReactStars from 'react-rating-stars-component'
 import moment from 'moment'
 import { FaHeart } from 'react-icons/fa'
+import { AiOutlineEllipsis } from 'react-icons/ai'
 import { useEffect, useState } from 'react'
 import Comment from './Comment'
 
-const PostCard = ({ post, currentUser, handleLike, token }) => {
+const PostCard = ({
+    post,
+    currentUser,
+    handleLike,
+    token,
+    handleDeletePost,
+}) => {
     const [comments, setComments] = useState([])
     const [show, setShow] = useState(false)
     const [commentText, setCommentText] = useState('')
@@ -42,7 +49,7 @@ const PostCard = ({ post, currentUser, handleLike, token }) => {
         }
     }
 
-    async function handleDelete(e, commentId) {
+    async function handleDeleteComment(e, commentId) {
         e.preventDefault()
         try {
             const res = await fetch(
@@ -84,11 +91,18 @@ const PostCard = ({ post, currentUser, handleLike, token }) => {
 
     return (
         <div className="border-t-2 py-3">
-            <div className="mb-2 inline-block text-sm text-slate-600 hover:brightness-150">
-                <Link className="font-bold" to={`/profile/${post.user._id}`}>
-                    {post.user.username}{' '}
-                </Link>
-                <span>ate at...</span>
+            <div className="mb-2 flex text-sm text-slate-600">
+                <div className="hover:brightness-150">
+                    <Link
+                        className="font-bold"
+                        to={`/profile/${post.user._id}`}>
+                        {post.user.username}{' '}
+                    </Link>
+                    <span>ate at...</span>
+                </div>
+                <div className="ml-auto mr-2 cursor-pointer self-center text-xl">
+                    <AiOutlineEllipsis />
+                </div>
             </div>
             <h4 className="text-xl font-bold">{post.restaurant}</h4>
             <div className="flex items-center gap-2">
@@ -136,11 +150,13 @@ const PostCard = ({ post, currentUser, handleLike, token }) => {
                 <div
                     className="cursor-pointer font-semibold hover:brightness-150"
                     onClick={() => handleComments()}>
-                    {comments.length !== 0
-                        ? `${comments.length} comments`
-                        : comments.length === 1
-                        ? 'comment'
-                        : 'Leave a comment...'}
+                    {comments.length === 0 && <span>Leave a comment...</span>}
+                    {comments.length !== 0 && (
+                        <span>
+                            {comments.length}{' '}
+                            {comments.length === 1 ? 'comment' : 'comments'}
+                        </span>
+                    )}
                 </div>
             </div>
             {show && (
@@ -151,7 +167,7 @@ const PostCard = ({ post, currentUser, handleLike, token }) => {
                                 key={comment._id}
                                 comment={comment}
                                 currentUser={currentUser}
-                                handleDelete={handleDelete}
+                                handleDeleteComment={handleDeleteComment}
                             />
                         ))
                     ) : (

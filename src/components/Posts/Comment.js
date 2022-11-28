@@ -3,7 +3,7 @@ import defaultProfile from '../../assets/defaultUserImg.png'
 import moment from 'moment'
 import { FaTrashAlt } from 'react-icons/fa'
 
-const Comment = ({ comment, currentUser, handleDelete }) => {
+const Comment = ({ comment, currentUser, handleDeleteComment }) => {
     const navigate = useNavigate()
 
     return (
@@ -29,7 +29,7 @@ const Comment = ({ comment, currentUser, handleDelete }) => {
             {currentUser._id === comment.user._id && (
                 <div
                     className="ml-auto mr-2 cursor-pointer self-center"
-                    onClick={(e) => handleDelete(e, comment._id)}>
+                    onClick={(e) => handleDeleteComment(e, comment._id)}>
                     <FaTrashAlt className="text-red-600" />
                 </div>
             )}
