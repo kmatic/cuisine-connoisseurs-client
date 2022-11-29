@@ -35,7 +35,7 @@ const NewEntry = () => {
     }
 
     return (
-        <div className="container mx-auto my-10 flex max-w-sm flex-col gap-8 rounded-md bg-white p-6 drop-shadow-lg">
+        <div className="mx-auto my-10 flex w-full max-w-lg flex-col gap-8 rounded-md bg-white p-6 drop-shadow-lg">
             <form
                 className="flex flex-col gap-3"
                 onSubmit={(e) => handleSubmit(e)}>
@@ -48,7 +48,7 @@ const NewEntry = () => {
                 />
                 <textarea
                     placeholder="Add a review..."
-                    className="rounded border bg-gray-100 p-2 focus:border-blue-500 focus:outline-none"
+                    className="h-32 rounded border bg-gray-100 p-2 focus:border-blue-500 focus:outline-none"
                     value={review}
                     onChange={(e) => setReview(e.target.value)}
                 />

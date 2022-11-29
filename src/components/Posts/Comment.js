@@ -8,9 +8,9 @@ const Comment = ({ comment, currentUser, handleDeleteComment }) => {
 
     return (
         <div className="flex gap-10 border-t-2 py-4">
-            <div className="gap flex items-center gap-1">
+            <div className="gap flex flex-col items-center gap-1 self-start md:flex-row">
                 <div
-                    className="cursor-pointer"
+                    className="shrink-0 cursor-pointer self-start md:self-center"
                     onClick={() => navigate(`/profile/${comment.user._id}`)}>
                     <img src={defaultProfile} alt="" className="w-6" />
                 </div>
@@ -20,12 +20,12 @@ const Comment = ({ comment, currentUser, handleDeleteComment }) => {
                         to={`/profile/${comment.user._id}`}>
                         {comment.user.username}
                     </Link>
-                    <span className="text-xs">
-                        {moment(comment.timestamp).format('MM/DD/YYYY')}
+                    <span className="text-xs text-gray-400">
+                        {moment(comment.timestamp).format('MM/DD/YY')}
                     </span>
                 </div>
             </div>
-            <div className="self-center">{comment.text}</div>
+            <p className="max-w-3xl break-all">{comment.text}</p>
             {currentUser._id === comment.user._id && (
                 <div
                     className="ml-auto mr-2 cursor-pointer self-center"

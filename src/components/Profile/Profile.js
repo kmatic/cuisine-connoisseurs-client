@@ -83,19 +83,20 @@ const Profile = () => {
     }, [id])
 
     return (
-        <div className="container mx-auto my-10 flex flex-col gap-6">
-            <div className="flex items-center justify-between rounded-xl bg-white p-10 drop-shadow-md">
+        <div className="mx-auto my-10 flex w-full max-w-5xl flex-col gap-6">
+            <div className="flex items-center rounded-xl bg-white p-10 drop-shadow-md">
                 <div className="flex gap-10">
-                    <div>
-                        <img src={userPicture} className="w-28" alt="" />
-                        <h2 className="text-center text-2xl font-bold">
-                            {profile.username}
-                        </h2>
-                    </div>
+                    <img
+                        src={userPicture}
+                        className="w-28 shrink-0 self-center"
+                        alt=""
+                    />
                     {!editMode ? (
                         <div className="flex flex-col gap-2">
                             <div className="flex justify-between border-b py-2">
-                                <h2 className="text-xl font-bold">ABOUT ME</h2>
+                                <h2 className="text-2xl font-bold">
+                                    {profile.username}
+                                </h2>
                                 {currentUser._id === id && (
                                     <button
                                         className="flex items-center gap-1 rounded-md bg-slate-900 px-2 text-xs font-semibold text-white hover:brightness-150"
@@ -176,7 +177,7 @@ const Profile = () => {
                         </div>
                     )}
                 </div>
-                <div className="flex self-start text-center">
+                <div className="ml-auto flex self-start text-center">
                     <div className="border-r px-3">
                         <p className="text-2xl font-bold">
                             {posts.length !== 0 ? posts.length : '0'}
@@ -197,8 +198,8 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-3 gap-6">
-                <div className="col-span-1 flex flex-col gap-2 rounded-xl bg-white drop-shadow-md">
+            <div className="grid grid-cols-1 gap-y-6 md:grid-cols-3 md:gap-6">
+                <div className="col-span-1 flex flex-col gap-2 self-start rounded-xl bg-white drop-shadow-md">
                     <div className="rounded-t-xl bg-slate-900 p-4">
                         <h2 className="text-xl font-bold text-white">
                             FOLLOWERS
@@ -233,11 +234,12 @@ const Profile = () => {
                         )}
                     </div>
                 </div>
-                <div className="col-span-2 flex flex-col gap-2 rounded-xl bg-white drop-shadow-md">
-                    <div className="rounded-t-xl bg-slate-900 p-4">
-                        <h2 className="text-xl font-bold text-white">
-                            RECENT ACTIVITY
-                        </h2>
+                <div className="col-span-2 flex flex-col gap-2 self-start rounded-xl bg-white drop-shadow-md">
+                    <div className="flex flex-col rounded-t-xl bg-slate-900 p-4 text-white sm:flex-row sm:items-center">
+                        <h2 className="text-xl font-bold">RECENT ACTIVITY</h2>
+                        <p className="text-xs sm:ml-auto">
+                            View the posts on the homepage to like and comment!
+                        </p>
                     </div>
                     <div className="relative mb-4 px-4">
                         {!currentUser.following.includes(id) &&
@@ -255,7 +257,7 @@ const Profile = () => {
                                         !(currentUser._id === id) &&
                                         'blur-md'
                                     }`}>
-                                    <h4 className="text-xl font-bold">
+                                    <h4 className="break-words text-xl font-bold">
                                         {post.restaurant}
                                     </h4>
                                     <div className="flex items-center gap-2">
@@ -274,7 +276,9 @@ const Profile = () => {
                                             )}
                                         </span>
                                     </div>
-                                    <p>{post.description}</p>
+                                    <p className="break-words">
+                                        {post.description}
+                                    </p>
                                 </div>
                             ))
                         ) : (

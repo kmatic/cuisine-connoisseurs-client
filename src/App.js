@@ -30,7 +30,7 @@ const App = () => {
                 <UserContext.Provider
                     value={{ addCurrentUser, currentUser, removeCurrentUser }}>
                     <Header />
-                    <main>
+                    <main className="p-4">
                         <Routes>
                             <Route
                                 path="/"

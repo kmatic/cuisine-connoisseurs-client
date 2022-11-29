@@ -83,7 +83,7 @@ const Posts = () => {
     }, [])
 
     return (
-        <div className="container mx-auto my-10 flex flex-col gap-6">
+        <div className="mx-auto my-10 flex w-full max-w-5xl flex-col gap-6">
             <h2 className="text-center text-2xl">
                 Hi, Kristopher! Heres where users you follow have been eating...
             </h2>

@@ -104,7 +104,7 @@ const PostCard = ({
                     <AiOutlineEllipsis />
                 </div>
             </div>
-            <h4 className="text-xl font-bold">{post.restaurant}</h4>
+            <h4 className="break-words text-xl font-bold">{post.restaurant}</h4>
             <div className="flex items-center gap-2">
                 <ReactStars
                     count={5}
@@ -118,7 +118,7 @@ const PostCard = ({
                     Posted on {moment(post.timestamp).format('MM/DD/YYYY')}
                 </span>
             </div>
-            <p>{post.description}</p>
+            <p className="break-words">{post.description}</p>
             <div className="my-2 flex justify-between text-sm text-slate-600">
                 <div className="flex items-center gap-2">
                     <div

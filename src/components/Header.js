@@ -15,14 +15,14 @@ const Header = () => {
 
     return (
         <header className="bg-slate-900 p-4 text-white">
-            <nav className="container m-2 mx-auto flex items-center justify-between">
+            <nav className="m-2 mx-auto flex w-full max-w-5xl items-center justify-between">
                 <Link to="/" className="flex items-center gap-1">
                     <BiFoodMenu className="text-3xl" />
-                    <h1 className="text-2xl font-semibold">
+                    <h1 className="text-lg font-semibold md:text-2xl">
                         CuisineConnoisseurs
                     </h1>
                 </Link>
-                <ul className="flex gap-6 text-base font-semibold text-slate-300">
+                <ul className="flex gap-2 text-sm font-semibold text-slate-300 md:gap-6 md:text-base">
                     {!currentUser ? (
                         <>
                             <li className="hover:text-white">

@@ -55,12 +55,14 @@ const Users = () => {
             if (res.status !== 200) return console.error('Something went wrong')
             const data = await res.json()
             addCurrentUser(data.user)
+            console.log(data.user)
         } catch (err) {
             console.error(err)
         }
     }
 
     async function handleUnfollow(e, user) {
+        console.log('yeet')
         e.stopPropagation()
         if (
             !user.followers.includes(currentUser._id) ||
@@ -78,7 +80,7 @@ const Users = () => {
         const newCurrentUserFollowing = currentUser.following.filter(
             (id) => id !== user._id
         )
-
+        console.log('yeet2')
         try {
             const res = await fetch(
                 `http://localhost:5000/api/profile/${user._id}/unfollow`,
@@ -121,7 +123,7 @@ const Users = () => {
     }, [])
 
     return (
-        <div className="container mx-auto my-10 flex flex-col gap-6">
+        <div className="mx-auto my-10 flex w-full max-w-5xl flex-col gap-6">
             <section className="self-center border-b-2">
                 <div className="flex items-center gap-2">
                     <input
@@ -135,10 +137,10 @@ const Users = () => {
                 </div>
             </section>
             <section>
-                <h3 className="text-lg font-bold">
+                <h3 className="text-center text-lg font-bold md:text-start">
                     Find others in the CuisineConnoisseurs community:
                 </h3>
-                <div className="my-8 grid max-w-3xl grid-cols-2 gap-4">
+                <div className="my-8 grid max-w-3xl grid-cols-1 gap-4 md:grid-cols-2">
                     {!search.filtered.length ? (
                         <span className="col-span-2 font-semibold">
                             No users found with the name "{search.query}"...
