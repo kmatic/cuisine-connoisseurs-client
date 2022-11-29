@@ -84,51 +84,43 @@ const Profile = () => {
 
     return (
         <div className="mx-auto my-10 flex w-full max-w-5xl flex-col gap-6">
-            <div className="flex items-center rounded-xl bg-white p-10 drop-shadow-md">
-                <div className="flex gap-10">
+            <div className="grid grid-cols-1 gap-y-6 rounded-xl bg-white p-8 drop-shadow-md md:grid-cols-3">
+                <div className="col-span-2 flex gap-10">
                     <img
                         src={userPicture}
-                        className="w-28 shrink-0 self-center"
+                        className="w-20 shrink-0 self-center md:w-28"
                         alt=""
                     />
                     {!editMode ? (
                         <div className="flex flex-col gap-2">
                             <div className="flex justify-between border-b py-2">
-                                <h2 className="text-2xl font-bold">
+                                <h2 className="break-all text-lg font-bold md:text-2xl ">
                                     {profile.username}
                                 </h2>
                                 {currentUser._id === id && (
                                     <button
-                                        className="flex items-center gap-1 rounded-md bg-slate-900 px-2 text-xs font-semibold text-white hover:brightness-150"
+                                        className="flex h-6 flex-none items-center gap-1 self-center rounded-md bg-slate-900 px-2 text-xs font-semibold text-white hover:brightness-150"
                                         onClick={handleEditMode}>
                                         <span>EDIT PROFILE</span>
                                         <FiEdit2 />
                                     </button>
                                 )}
                             </div>
-                            <div className="flex gap-8">
-                                <div>
-                                    <p className="text-lg font-semibold">
-                                        CITY:
-                                    </p>
-                                    <p className="text-lg font-semibold">
-                                        MESSAGE:
-                                    </p>
-                                    <p className="text-lg font-semibold">
-                                        MEMBER SINCE:
-                                    </p>
+                            <div className="text-md flex gap-8 md:text-lg">
+                                <div className="font-semibold">
+                                    <p>JOINED:</p>
+                                    <p>CITY:</p>
+                                    <p>BIO:</p>
                                 </div>
                                 <div>
-                                    <p className="text-lg">
-                                        {profile.city || 'No city'}
-                                    </p>
-                                    <p className="text-lg">
-                                        {profile.bio || 'No message'}
-                                    </p>
-                                    <p className="text-lg">
+                                    <p>
                                         {moment(profile.created).format(
                                             'MM/DD/YYYY'
                                         )}
+                                    </p>
+                                    <p>{profile.city || 'No city'}</p>
+                                    <p className="text-clip">
+                                        {profile.bio || 'No message'}
                                     </p>
                                 </div>
                             </div>
@@ -136,16 +128,18 @@ const Profile = () => {
                     ) : (
                         <div className="flex flex-col gap-2">
                             <div className="flex border-b py-2">
-                                <h2 className="text-xl font-bold">ABOUT ME</h2>
+                                <h2 className="break-all text-lg font-bold md:text-2xl">
+                                    {profile.username}
+                                </h2>
                                 {currentUser._id === id && (
                                     <div className="flex gap-2">
                                         <button
-                                            className="flex items-center gap-1 rounded-md bg-red-500 px-2 text-xs font-semibold text-white hover:brightness-125"
+                                            className="h-6 flex-none self-center rounded-md bg-red-500 px-2 text-xs font-semibold text-white hover:brightness-125"
                                             onClick={() => setEditMode(false)}>
                                             <span>CANCEL</span>
                                         </button>
                                         <button
-                                            className="flex items-center gap-1 rounded-md bg-green-500 px-2 text-xs font-semibold text-white hover:brightness-125"
+                                            className="h-6 flex-none self-center rounded-md bg-green-500 px-2 text-xs font-semibold text-white hover:brightness-125"
                                             onClick={handleSave}>
                                             <span>SAVE CHANGES</span>
                                         </button>
@@ -177,7 +171,7 @@ const Profile = () => {
                         </div>
                     )}
                 </div>
-                <div className="ml-auto flex self-start text-center">
+                <div className="flex self-start justify-self-center text-center md:justify-self-end">
                     <div className="border-r px-3">
                         <p className="text-2xl font-bold">
                             {posts.length !== 0 ? posts.length : '0'}
@@ -215,7 +209,7 @@ const Profile = () => {
                                         onClick={() =>
                                             navigate(`/profile/${follower._id}`)
                                         }
-                                        className="cursor-pointer">
+                                        className="shrink-0 cursor-pointer">
                                         <img
                                             src={userPicture}
                                             alt=""
@@ -223,7 +217,7 @@ const Profile = () => {
                                         />
                                     </div>
                                     <Link
-                                        className="text-lg hover:text-blue-800 hover:underline"
+                                        className="break-all text-lg hover:text-blue-800 hover:underline"
                                         to={`/profile/${follower._id}`}>
                                         {follower.username}
                                     </Link>

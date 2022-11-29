@@ -94,7 +94,7 @@ const PostCard = ({
             <div className="mb-2 flex text-sm text-slate-600">
                 <div className="hover:brightness-150">
                     <Link
-                        className="font-bold"
+                        className="break-all font-bold"
                         to={`/profile/${post.user._id}`}>
                         {post.user.username}{' '}
                     </Link>

@@ -84,8 +84,9 @@ const Posts = () => {
 
     return (
         <div className="mx-auto my-10 flex w-full max-w-5xl flex-col gap-6">
-            <h2 className="text-center text-2xl">
-                Hi, Kristopher! Heres where users you follow have been eating...
+            <h2 className="break-words text-center text-2xl">
+                Hi, {currentUser.username}! Heres where users you follow have
+                been eating...
             </h2>
             <button
                 className="self-start self-center rounded-md border-2 border-solid border-slate-900 bg-slate-900 px-6 py-1 text-lg font-semibold text-white hover:bg-inherit hover:text-slate-900"
