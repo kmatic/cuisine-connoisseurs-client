@@ -15,7 +15,7 @@ const UserCard = ({ user, currentUser, handleFollow, handleUnfollow }) => {
             </div>
             {currentUser.following.includes(user._id) ? (
                 <button
-                    className="h-6 flex-none rounded-md bg-gray-400 px-2 text-xs font-semibold text-white hover:bg-red-600"
+                    className="h-6 flex-none self-center rounded-md bg-gray-400 px-2 text-xs font-semibold text-white hover:bg-red-600"
                     onClick={(e) => handleUnfollow(e, user)}>
                     FOLLOWED
                 </button>

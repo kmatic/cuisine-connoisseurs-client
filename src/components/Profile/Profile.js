@@ -84,17 +84,17 @@ const Profile = () => {
 
     return (
         <div className="mx-auto my-10 flex w-full max-w-5xl flex-col gap-6">
-            <div className="grid grid-cols-1 gap-y-6 rounded-xl bg-white p-8 drop-shadow-md md:grid-cols-3">
-                <div className="col-span-2 flex gap-10">
+            <div className="grid grid-cols-1 gap-y-6 rounded-xl bg-white p-8 drop-shadow-md min-[850px]:grid-cols-3">
+                <div className="col-span-2 flex flex-col gap-6 min-[850px]:flex-row">
                     <img
                         src={userPicture}
-                        className="w-20 shrink-0 self-center md:w-28"
+                        className="w-28 shrink-0 self-center"
                         alt=""
                     />
                     {!editMode ? (
                         <div className="flex flex-col gap-2">
                             <div className="flex justify-between border-b py-2">
-                                <h2 className="break-all text-lg font-bold md:text-2xl ">
+                                <h2 className="break-all text-lg font-bold min-[850px]:text-2xl ">
                                     {profile.username}
                                 </h2>
                                 {currentUser._id === id && (
@@ -106,7 +106,7 @@ const Profile = () => {
                                     </button>
                                 )}
                             </div>
-                            <div className="text-md flex gap-8 md:text-lg">
+                            <div className="flex gap-8 text-sm min-[850px]:text-lg">
                                 <div className="font-semibold">
                                     <p>JOINED:</p>
                                     <p>CITY:</p>
@@ -118,7 +118,9 @@ const Profile = () => {
                                             'MM/DD/YYYY'
                                         )}
                                     </p>
-                                    <p>{profile.city || 'No city'}</p>
+                                    <p className="break-all">
+                                        {profile.city || 'No city'}
+                                    </p>
                                     <p className="text-clip">
                                         {profile.bio || 'No message'}
                                     </p>
@@ -128,7 +130,7 @@ const Profile = () => {
                     ) : (
                         <div className="flex flex-col gap-2">
                             <div className="flex border-b py-2">
-                                <h2 className="break-all text-lg font-bold md:text-2xl">
+                                <h2 className="break-all text-lg font-bold min-[850px]:text-2xl">
                                     {profile.username}
                                 </h2>
                                 {currentUser._id === id && (
@@ -171,7 +173,7 @@ const Profile = () => {
                         </div>
                     )}
                 </div>
-                <div className="flex self-start justify-self-center text-center md:justify-self-end">
+                <div className="flex self-start justify-self-center text-center min-[850px]:justify-self-end">
                     <div className="border-r px-3">
                         <p className="text-2xl font-bold">
                             {posts.length !== 0 ? posts.length : '0'}
