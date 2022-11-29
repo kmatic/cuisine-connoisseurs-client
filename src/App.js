@@ -24,8 +24,6 @@ const App = () => {
     const { token, addToken, removeToken } = useToken()
     const { addCurrentUser, currentUser, removeCurrentUser } = useUser()
 
-    console.log(currentUser)
-
     return (
         <Router basename="/">
             <TokenContext.Provider value={{ token, addToken, removeToken }}>

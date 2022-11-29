@@ -4,6 +4,7 @@ import userPicture from '../../assets/defaultUserImg.png'
 import { FiEdit2 } from 'react-icons/fi'
 import moment from 'moment'
 import { TokenContext, UserContext } from '../../App'
+import ReactStars from 'react-rating-stars-component'
 
 const Profile = () => {
     const { id } = useParams()
@@ -13,8 +14,9 @@ const Profile = () => {
 
     const [profile, setProfile] = useState({
         followers: [],
-        posts: [],
     })
+
+    const [posts, setPosts] = useState([])
 
     const [editMode, setEditMode] = useState(false)
     const [city, setCity] = useState('')
@@ -64,6 +66,19 @@ const Profile = () => {
             }
         }
 
+        async function getPosts() {
+            try {
+                const res = await fetch(
+                    `http://localhost:5000/api/posts/profile/${id}`
+                )
+                const data = await res.json()
+                setPosts(data.posts)
+            } catch (err) {
+                console.error(err)
+            }
+        }
+
+        getPosts()
         getProfile()
     }, [id])
 
@@ -164,7 +179,7 @@ const Profile = () => {
                 <div className="flex self-start text-center">
                     <div className="border-r px-3">
                         <p className="text-2xl font-bold">
-                            {profile.posts ? profile.posts.length : '0'}
+                            {posts.length !== 0 ? posts.length : '0'}
                         </p>
                         <p className="text-xs text-gray-600">ENTRIES</p>
                     </div>
@@ -224,13 +239,53 @@ const Profile = () => {
                             RECENT ACTIVITY
                         </h2>
                     </div>
-                    <div className="mb-4 px-4">
-                        {!(profile.posts.length === 0) ? (
-                            profile.posts.map((post) => (
-                                <div key={post._id}>{post.text}</div>
+                    <div className="relative mb-4 px-4">
+                        {!currentUser.following.includes(id) &&
+                            !(currentUser._id === id) && (
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform font-semibold">
+                                    FOLLOW THIS USER TO SEE THEIR POSTS
+                                </div>
+                            )}
+                        {!(posts.length === 0) ? (
+                            posts.map((post) => (
+                                <div
+                                    key={post._id}
+                                    className={`py-3 ${
+                                        !currentUser.following.includes(id) &&
+                                        !(currentUser._id === id) &&
+                                        'blur-md'
+                                    }`}>
+                                    <h4 className="text-xl font-bold">
+                                        {post.restaurant}
+                                    </h4>
+                                    <div className="flex items-center gap-2">
+                                        <ReactStars
+                                            count={5}
+                                            size={24}
+                                            isHalf={true}
+                                            activeColor="#38BDF8"
+                                            value={post.rating}
+                                            edit={false}
+                                        />
+                                        <span className="text-sm text-slate-600">
+                                            Posted on{' '}
+                                            {moment(post.timestamp).format(
+                                                'MM/DD/YYYY'
+                                            )}
+                                        </span>
+                                    </div>
+                                    <p>{post.description}</p>
+                                </div>
                             ))
                         ) : (
-                            <div className="py-2 italic">No posts yet</div>
+                            <div
+                                className={`py-3 italic ${
+                                    !currentUser.following.includes(id) &&
+                                    !(currentUser._id === id) &&
+                                    'blur-md'
+                                }`}>
+                                No posts yet
+                            </div>
                         )}
                     </div>
                 </div>

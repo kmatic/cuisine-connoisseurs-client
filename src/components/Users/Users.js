@@ -55,7 +55,6 @@ const Users = () => {
             if (res.status !== 200) return console.error('Something went wrong')
             const data = await res.json()
             addCurrentUser(data.user)
-            console.log(data)
         } catch (err) {
             console.error(err)
         }
@@ -99,7 +98,6 @@ const Users = () => {
             if (res.status !== 200) return console.error('Something went wrong')
             const data = await res.json()
             addCurrentUser(data.user)
-            console.log(data)
         } catch (err) {
             console.error(err)
         }
