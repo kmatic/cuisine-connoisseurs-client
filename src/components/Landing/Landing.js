@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom'
 
 const Landing = () => {
     return (
-        <div className="container mx-auto p-4 my-10">
+        <div className="mx-auto my-10 w-full max-w-5xl">
             <section className="flex gap-6">
-                <div className="max-w-xs flex flex-col gap-6">
+                <div className="flex max-w-xs flex-col gap-6">
                     <h1 className="text-4xl font-bold">
                         Track restaurants you've dined in
                     </h1>
@@ -14,12 +14,12 @@ const Landing = () => {
                         foodie needs.
                     </p>
                     <Link to="/signup">
-                        <button className="border-slate-900 border-2 border-solid bg-slate-900 text-white px-10 py-2 text-lg font-semibold rounded-md self-start hover:bg-inherit hover:text-slate-900">
+                        <button className="self-start rounded-md border-2 border-solid border-slate-900 bg-slate-900 px-10 py-2 text-lg font-semibold text-white hover:bg-inherit hover:text-slate-900">
                             Create an Account
                         </button>
                     </Link>
                 </div>
-                <div className="bg-black w-96">PICTURE</div>
+                <div className="w-96 bg-black">PICTURE</div>
             </section>
             <section className="my-8 text-center">
                 <h2 className="text-lg">Made with:</h2>

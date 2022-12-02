@@ -128,8 +128,8 @@ const Profile = () => {
                             </div>
                         </div>
                     ) : (
-                        <div className="flex flex-col gap-2">
-                            <div className="flex border-b py-2">
+                        <div className="flex w-full flex-col gap-2">
+                            <div className="flex justify-between border-b py-2">
                                 <h2 className="break-all text-lg font-bold min-[850px]:text-2xl">
                                     {profile.username}
                                 </h2>
@@ -152,7 +152,7 @@ const Profile = () => {
                                 <form className="flex flex-col gap-2">
                                     <input
                                         type="text"
-                                        className="bg-gray-100 p-1 focus:outline-none"
+                                        className="w-full bg-gray-100 p-1 focus:outline-none"
                                         placeholder="Your City"
                                         value={city}
                                         onChange={(e) =>
@@ -161,7 +161,7 @@ const Profile = () => {
                                     />
                                     <textarea
                                         type="text"
-                                        className="bg-gray-100 p-1 focus:outline-none"
+                                        className="w-full bg-gray-100 p-1 focus:outline-none"
                                         placeholder="Message to other users"
                                         value={message}
                                         onChange={(e) =>
@@ -194,7 +194,7 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-1 gap-y-6 md:grid-cols-3 md:gap-6">
+            <div className="grid grid-cols-1 gap-y-6 min-[850px]:grid-cols-3 min-[850px]:gap-6">
                 <div className="col-span-1 flex flex-col gap-2 self-start rounded-xl bg-white drop-shadow-md">
                     <div className="rounded-t-xl bg-slate-900 p-4">
                         <h2 className="text-xl font-bold text-white">
@@ -231,9 +231,9 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="col-span-2 flex flex-col gap-2 self-start rounded-xl bg-white drop-shadow-md">
-                    <div className="flex flex-col rounded-t-xl bg-slate-900 p-4 text-white sm:flex-row sm:items-center">
+                    <div className="flex flex-col rounded-t-xl bg-slate-900 p-4 text-white min-[850px]:flex-row min-[850px]:items-center">
                         <h2 className="text-xl font-bold">RECENT ACTIVITY</h2>
-                        <p className="text-xs sm:ml-auto">
+                        <p className="text-xs min-[850px]:ml-auto">
                             View the posts on the homepage to like and comment!
                         </p>
                     </div>

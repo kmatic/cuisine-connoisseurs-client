@@ -12,7 +12,9 @@ const Posts = () => {
 
     async function getPosts() {
         try {
-            const res = await fetch('http://localhost:5000/api/posts')
+            const res = await fetch(
+                `http://localhost:5000/api/posts/${currentUser._id}`
+            )
             const data = await res.json()
             setPosts(data.posts)
         } catch (err) {

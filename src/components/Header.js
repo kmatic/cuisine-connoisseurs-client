@@ -24,7 +24,7 @@ const Header = () => {
                         CuisineConnoisseurs
                     </h1>
                 </Link>
-                <ul className="DESKTOP-MENU hidden font-semibold text-slate-300 sm:flex sm:gap-6 sm:text-base">
+                <ul className="hidden font-semibold text-slate-300 sm:flex sm:gap-6 sm:text-base">
                     {!currentUser ? (
                         <>
                             <li className="hover:text-white">
@@ -53,7 +53,7 @@ const Header = () => {
                         </>
                     )}
                 </ul>
-                <div className="MOBILE-MENU flex sm:hidden">
+                <div className="flex sm:hidden">
                     <div
                         className="cursor-pointer space-y-1"
                         onClick={() => setNavOpen((prev) => !prev)}>
@@ -78,7 +78,7 @@ const Header = () => {
                             </svg>
                         </div>
                         {!currentUser ? (
-                            <ul className="NAVIGATION-MOBILE-OPEN flex min-h-[250px] flex-col items-center justify-between">
+                            <ul className="flex min-h-[250px] flex-col items-center justify-between">
                                 <li className="my-8 border-b border-gray-400 uppercase">
                                     <div onClick={() => setNavOpen(false)}>
                                         <Link to={`/login`}>Login</Link>
@@ -91,7 +91,7 @@ const Header = () => {
                                 </li>
                             </ul>
                         ) : (
-                            <ul className="NAVIGATION-MOBILE-OPEN flex min-h-[250px] flex-col items-center justify-between">
+                            <ul className="flex min-h-[250px] flex-col items-center justify-between">
                                 <li className="my-8 border-b border-gray-400 uppercase">
                                     <div onClick={() => setNavOpen(false)}>
                                         <Link to="/posts">Home</Link>
@@ -111,7 +111,9 @@ const Header = () => {
                                     </div>
                                 </li>
                                 <li className="my-8 border-b border-gray-400 uppercase">
-                                    <button onClick={logout}>Logout</button>
+                                    <div onClick={() => setNavOpen(false)}>
+                                        <button onClick={logout}>Logout</button>
+                                    </div>
                                 </li>
                             </ul>
                         )}
