@@ -1,10 +1,11 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useContext } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import userPicture from '../../assets/defaultUserImg.png'
 import { FiEdit2 } from 'react-icons/fi'
 import moment from 'moment'
 import { TokenContext, UserContext } from '../../App'
 import ReactStars from 'react-rating-stars-component'
+import useFetchData from '../Hooks/useFetchData'
 
 const Profile = () => {
     const { id } = useParams()
@@ -12,12 +13,13 @@ const Profile = () => {
     const { token } = useContext(TokenContext)
     const navigate = useNavigate()
 
-    const [profile, setProfile] = useState({
-        followers: [],
-    })
+    const postsUrl = `http://localhost:5000/api/posts/profile/${id}`
+    const profileUrl = `http://localhost:5000/api/profile/${id}`
 
-    const [posts, setPosts] = useState([])
+    const { data: posts } = useFetchData(postsUrl)
+    const { data: profile, setData: setProfile } = useFetchData(profileUrl)
 
+    // edit form
     const [editMode, setEditMode] = useState(false)
     const [city, setCity] = useState('')
     const [message, setMessage] = useState('')
@@ -53,36 +55,6 @@ const Profile = () => {
         }
     }
 
-    useEffect(() => {
-        async function getProfile() {
-            try {
-                const res = await fetch(
-                    `http://localhost:5000/api/profile/${id}`
-                )
-                const data = await res.json()
-                // console.log(data.profile)
-                setProfile(data.profile)
-            } catch (err) {
-                console.error(err)
-            }
-        }
-
-        async function getPosts() {
-            try {
-                const res = await fetch(
-                    `http://localhost:5000/api/posts/profile/${id}`
-                )
-                const data = await res.json()
-                setPosts(data.posts)
-            } catch (err) {
-                console.error(err)
-            }
-        }
-
-        getPosts()
-        getProfile()
-    }, [id])
-
     return (
         <div className="mx-auto my-10 flex w-full max-w-5xl flex-col gap-6">
             <div className="grid grid-cols-1 gap-y-6 rounded-xl bg-white p-8 drop-shadow-md min-[850px]:grid-cols-3">
@@ -96,7 +68,7 @@ const Profile = () => {
                         <div className="flex flex-col gap-2">
                             <div className="flex justify-between border-b py-2">
                                 <h2 className="break-all text-lg font-bold min-[850px]:text-2xl ">
-                                    {profile.username}
+                                    {profile && profile.username}
                                 </h2>
                                 {currentUser._id === id && (
                                     <button
@@ -114,17 +86,21 @@ const Profile = () => {
                                     <p>BIO:</p>
                                 </div>
                                 <div>
-                                    <p>
-                                        {moment(profile.created).format(
-                                            'MM/DD/YYYY'
-                                        )}
-                                    </p>
-                                    <p className="break-all">
-                                        {profile.city || 'No city'}
-                                    </p>
-                                    <p className="text-clip">
-                                        {profile.bio || 'No message'}
-                                    </p>
+                                    {profile && (
+                                        <>
+                                            <p>
+                                                {moment(profile.created).format(
+                                                    'MM/DD/YYYY'
+                                                )}
+                                            </p>
+                                            <p className="break-all">
+                                                {profile.city || 'No city'}
+                                            </p>
+                                            <p className="text-clip">
+                                                {profile.bio || 'No message'}
+                                            </p>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -177,19 +153,19 @@ const Profile = () => {
                 <div className="flex self-start justify-self-center text-center min-[850px]:justify-self-end">
                     <div className="border-r px-3">
                         <p className="text-2xl font-bold">
-                            {posts.length !== 0 ? posts.length : '0'}
+                            {posts && posts.length}
                         </p>
                         <p className="text-xs text-gray-600">ENTRIES</p>
                     </div>
                     <div className="border-r px-3">
                         <p className="text-2xl font-bold">
-                            {profile.followers ? profile.followers.length : '0'}
+                            {profile && profile.followers.length}
                         </p>
                         <p className="text-xs text-gray-600">FOLLOWERS</p>
                     </div>
                     <div className="px-3">
                         <p className="text-2xl font-bold">
-                            {profile.following ? profile.following.length : '0'}
+                            {profile && profile.following.length}
                         </p>
                         <p className="text-xs text-gray-600">FOLLOWING</p>
                     </div>
@@ -203,7 +179,7 @@ const Profile = () => {
                         </h2>
                     </div>
                     <div className="mb-4 px-4">
-                        {!(profile.followers.length === 0) ? (
+                        {profile &&
                             profile.followers.map((follower) => (
                                 <div
                                     key={follower._id}
@@ -225,8 +201,8 @@ const Profile = () => {
                                         {follower.username}
                                     </Link>
                                 </div>
-                            ))
-                        ) : (
+                            ))}
+                        {profile && profile.followers.length === 0 && (
                             <div className="py-2 italic">No followers yet</div>
                         )}
                     </div>
@@ -239,13 +215,7 @@ const Profile = () => {
                         </p>
                     </div>
                     <div className="relative mb-4 px-4">
-                        {!currentUser.following.includes(id) &&
-                            !(currentUser._id === id) && (
-                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform font-semibold">
-                                    FOLLOW THIS USER TO SEE THEIR POSTS
-                                </div>
-                            )}
-                        {!(posts.length === 0) ? (
+                        {posts &&
                             posts.map((post) => (
                                 <div
                                     key={post._id}
@@ -277,8 +247,8 @@ const Profile = () => {
                                         {post.description}
                                     </p>
                                 </div>
-                            ))
-                        ) : (
+                            ))}
+                        {posts && posts.length === 0 && (
                             <div
                                 className={`py-3 italic ${
                                     !currentUser.following.includes(id) &&
@@ -288,6 +258,12 @@ const Profile = () => {
                                 No posts yet
                             </div>
                         )}
+                        {!currentUser.following.includes(id) &&
+                            !(currentUser._id === id) && (
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform font-semibold">
+                                    FOLLOW THIS USER TO SEE THEIR POSTS
+                                </div>
+                            )}
                     </div>
                 </div>
             </div>

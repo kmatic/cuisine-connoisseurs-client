@@ -2,29 +2,19 @@ import { useState, useEffect, useContext } from 'react'
 import { BsSearch } from 'react-icons/bs'
 import { TokenContext, UserContext } from '../../App'
 import UserCard from './UserCard'
+import useFetchData from '../Hooks/useFetchData'
 
 const Users = () => {
     const { token } = useContext(TokenContext)
     const { currentUser, addCurrentUser } = useContext(UserContext)
-    const [users, setUsers] = useState([])
+
     const [search, setSearch] = useState({
         query: '',
         filtered: [],
     })
 
-    async function getUsers() {
-        try {
-            const res = await fetch('http://localhost:5000/api/users')
-            const data = await res.json()
-            setUsers(data.users)
-            setSearch({
-                query: '',
-                filtered: data.users,
-            })
-        } catch (err) {
-            console.error(err)
-        }
-    }
+    const url = 'http://localhost:5000/api/users'
+    const { data: users } = useFetchData(url)
 
     async function handleFollow(e, user) {
         e.stopPropagation()
@@ -53,9 +43,9 @@ const Users = () => {
                 }
             )
             if (res.status !== 200) return console.error('Something went wrong')
-            const data = await res.json()
-            addCurrentUser(data.user)
-            console.log(data.user)
+            const obj = await res.json()
+            addCurrentUser(obj.user)
+            console.log(obj.user)
         } catch (err) {
             console.error(err)
         }
@@ -98,8 +88,8 @@ const Users = () => {
                 }
             )
             if (res.status !== 200) return console.error('Something went wrong')
-            const data = await res.json()
-            addCurrentUser(data.user)
+            const obj = await res.json()
+            addCurrentUser(obj.user)
         } catch (err) {
             console.error(err)
         }
@@ -119,8 +109,11 @@ const Users = () => {
     }
 
     useEffect(() => {
-        getUsers()
-    }, [])
+        setSearch({
+            query: '',
+            filtered: users,
+        })
+    }, [users])
 
     return (
         <div className="mx-auto my-10 flex w-full max-w-5xl flex-col gap-6">
@@ -141,11 +134,7 @@ const Users = () => {
                     Find others in the CuisineConnoisseurs community:
                 </h3>
                 <div className="my-8 grid max-w-3xl grid-cols-1 gap-4 md:grid-cols-2">
-                    {!search.filtered.length ? (
-                        <span className="col-span-2 font-semibold">
-                            No users found with the name "{search.query}"...
-                        </span>
-                    ) : (
+                    {search.filtered &&
                         search.filtered.map((user) => (
                             <UserCard
                                 key={user._id}
@@ -154,7 +143,11 @@ const Users = () => {
                                 handleFollow={handleFollow}
                                 handleUnfollow={handleUnfollow}
                             />
-                        ))
+                        ))}
+                    {search.filtered && search.filtered.length === 0 && (
+                        <span className="col-span-2 font-semibold">
+                            No users found with the name "{search.query}"...
+                        </span>
                     )}
                 </div>
             </section>

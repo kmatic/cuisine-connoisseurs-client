@@ -1,26 +1,17 @@
 import { useNavigate } from 'react-router-dom'
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { TokenContext, UserContext } from '../../App'
 import PostCard from './PostCard'
+import useFetchData from '../Hooks/useFetchData'
 
 const Posts = () => {
-    const [posts, setPosts] = useState([])
     const navigate = useNavigate()
-
     const { currentUser } = useContext(UserContext)
     const { token } = useContext(TokenContext)
 
-    async function getPosts() {
-        try {
-            const res = await fetch(
-                `http://localhost:5000/api/posts/${currentUser._id}`
-            )
-            const data = await res.json()
-            setPosts(data.posts)
-        } catch (err) {
-            console.error(err)
-        }
-    }
+    const url = `http://localhost:5000/api/posts/${currentUser._id}`
+
+    const { data: posts, setData: setPosts } = useFetchData(url)
 
     async function handleLike(post) {
         let newLikes = []
@@ -46,9 +37,10 @@ const Posts = () => {
                 }
             )
             if (res.status !== 200) return console.error('Something went wrong')
-            const data = await res.json()
+            const obj = await res.json()
+            // replace liked post in state to rerender like
             const updatedPosts = posts.map((updatedPost) => {
-                if (updatedPost._id === data.post._id) return data.post
+                if (updatedPost._id === obj.post._id) return obj.post
                 return updatedPost
             })
             setPosts(updatedPosts)
@@ -70,19 +62,16 @@ const Posts = () => {
                 }
             )
             if (res.status !== 200) return console.error('Something went wrong')
-            const data = await res.json()
+            const obj = await res.json()
+            // removed deleted post in state to rerender posts
             const updatedPosts = posts.filter(
-                (post) => post._id !== data.deletedPost._id
+                (post) => post._id !== obj.deletedPost._id
             )
             setPosts(updatedPosts)
         } catch (err) {
             console.error(err)
         }
     }
-
-    useEffect(() => {
-        getPosts()
-    }, [])
 
     return (
         <div className="mx-auto my-10 flex w-full max-w-5xl flex-col gap-6">
@@ -98,16 +87,17 @@ const Posts = () => {
             <div>
                 <h3 className="text-lg font-semibold">RECENT REVIEWS</h3>
                 <div>
-                    {posts.map((post) => (
-                        <PostCard
-                            key={post._id}
-                            post={post}
-                            currentUser={currentUser}
-                            token={token}
-                            handleLike={handleLike}
-                            handleDeletePost={handleDeletePost}
-                        />
-                    ))}
+                    {posts &&
+                        posts.map((post) => (
+                            <PostCard
+                                key={post._id}
+                                post={post}
+                                currentUser={currentUser}
+                                token={token}
+                                handleLike={handleLike}
+                                handleDeletePost={handleDeletePost}
+                            />
+                        ))}
                 </div>
             </div>
         </div>
