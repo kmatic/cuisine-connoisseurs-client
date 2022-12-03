@@ -44,6 +44,7 @@ const Profile = () => {
             if (res.status !== 200) return console.error('Something went wrong')
             const data = await res.json()
             // console.log(data)
+            console.log(data.updatedUser)
             setProfile(data.updatedUser)
             setEditMode(false)
         } catch (err) {

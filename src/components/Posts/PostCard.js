@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
 import ReactStars from 'react-rating-stars-component'
 import moment from 'moment'
-import { FaHeart } from 'react-icons/fa'
+import { FaHeart, FaTrashAlt } from 'react-icons/fa'
 import { AiOutlineEllipsis } from 'react-icons/ai'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Comment from './Comment'
+import useOutsideChecker from '../Hooks/useOutsideClick'
 
 const PostCard = ({
     post,
@@ -16,9 +17,12 @@ const PostCard = ({
     const [comments, setComments] = useState([])
     const [show, setShow] = useState(false)
     const [commentText, setCommentText] = useState('')
+    const [overFlowMenu, setOverFlowMenu] = useState(false)
+
+    const overFlowRef = useRef(null)
+    useOutsideChecker(overFlowRef, setOverFlowMenu)
 
     function handleComments() {
-        // getComments()
         setShow(!show)
     }
 
@@ -100,8 +104,28 @@ const PostCard = ({
                     </Link>
                     <span>ate at...</span>
                 </div>
-                <div className="ml-auto mr-2 cursor-pointer self-center text-xl">
-                    <AiOutlineEllipsis />
+                <div
+                    className="relative ml-auto mr-2 self-center"
+                    onClick={() => setOverFlowMenu(!overFlowMenu)}>
+                    <AiOutlineEllipsis className="cursor-pointer text-xl" />
+                    {overFlowMenu && (
+                        <div
+                            ref={overFlowRef}
+                            className="absolute top-4 right-2 w-44 rounded-md bg-white p-1 drop-shadow-md">
+                            {currentUser._id === post.user._id ? (
+                                <div
+                                    className="flex cursor-pointer items-center gap-1 rounded-md p-2 hover:bg-gray-200"
+                                    onClick={() => handleDeletePost(post._id)}>
+                                    <FaTrashAlt />
+                                    <span>Delete</span>
+                                </div>
+                            ) : (
+                                <div className="p-2">
+                                    <span>Not your post :&#41;</span>
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
             <h4 className="break-words text-xl font-bold">{post.restaurant}</h4>
