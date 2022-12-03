@@ -1,11 +1,14 @@
 import { BiFoodMenu } from 'react-icons/bi'
 import { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
+import useFocus from '../Hooks/useFocus'
 
 const Signup = ({ user }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
+
+    const { focusRef } = useFocus()
 
     async function handleSignup(e) {
         e.preventDefault()
@@ -45,6 +48,7 @@ const Signup = ({ user }) => {
                             Username
                         </label>
                         <input
+                            ref={focusRef}
                             type="text"
                             className="border-b pb-1 focus:outline-none"
                             value={username}

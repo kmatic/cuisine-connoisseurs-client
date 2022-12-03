@@ -2,12 +2,15 @@ import { BiFoodMenu } from 'react-icons/bi'
 import { useContext, useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 import { TokenContext, UserContext } from '../../App'
+import useFocus from '../Hooks/useFocus'
 
 const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const { addCurrentUser, currentUser } = useContext(UserContext)
     const { addToken } = useContext(TokenContext)
+
+    const { focusRef } = useFocus()
 
     async function handleLogin(e) {
         e.preventDefault()
@@ -49,6 +52,7 @@ const Login = () => {
                             Username
                         </label>
                         <input
+                            ref={focusRef}
                             type="text"
                             className="border-b pb-1 focus:outline-none"
                             value={username}

@@ -3,9 +3,10 @@ import ReactStars from 'react-rating-stars-component'
 import moment from 'moment'
 import { FaHeart, FaTrashAlt } from 'react-icons/fa'
 import { AiOutlineEllipsis } from 'react-icons/ai'
-import { useEffect, useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import Comment from './Comment'
 import useOutsideChecker from '../Hooks/useOutsideClick'
+import useFetchData from '../Hooks/useFetchData'
 
 const PostCard = ({
     post,
@@ -14,13 +15,15 @@ const PostCard = ({
     token,
     handleDeletePost,
 }) => {
-    const [comments, setComments] = useState([])
     const [show, setShow] = useState(false)
     const [commentText, setCommentText] = useState('')
     const [overFlowMenu, setOverFlowMenu] = useState(false)
 
     const overFlowRef = useRef(null)
     useOutsideChecker(overFlowRef, setOverFlowMenu)
+
+    const url = `http://localhost:5000/api/posts/${post._id}/comments`
+    const { data: comments, setData: setComments } = useFetchData(url)
 
     function handleComments() {
         setShow(!show)
@@ -44,8 +47,8 @@ const PostCard = ({
                 }
             )
             if (res.status !== 200) return console.error('Something went wrong')
-            const data = await res.json()
-            const updatedComments = [...comments, data.comment]
+            const obj = await res.json()
+            const updatedComments = [...comments, obj.data]
             setComments(updatedComments)
             setCommentText('')
         } catch (err) {
@@ -67,31 +70,15 @@ const PostCard = ({
                 }
             )
             if (res.status !== 200) return console.error('Something went wrong')
-            const data = await res.json()
+            const obj = await res.json()
             const updatedComments = comments.filter(
-                (comment) => comment._id !== data.deletedComment._id
+                (comment) => comment._id !== obj.deletedComment._id
             )
             setComments(updatedComments)
         } catch (err) {
             console.error(err)
         }
     }
-
-    useEffect(() => {
-        async function getComments() {
-            try {
-                const res = await fetch(
-                    `http://localhost:5000/api/posts/${post._id}/comments`
-                )
-                const data = await res.json()
-                setComments(data.comments)
-            } catch (err) {
-                console.error(err)
-            }
-        }
-
-        getComments()
-    }, [post._id])
 
     return (
         <div className="border-t-2 py-3">
@@ -174,18 +161,20 @@ const PostCard = ({
                 <div
                     className="cursor-pointer font-semibold hover:brightness-150"
                     onClick={() => handleComments()}>
-                    {comments.length === 0 && <span>Leave a comment...</span>}
-                    {comments.length !== 0 && (
+                    {comments && comments.length !== 0 ? (
                         <span>
                             {comments.length}{' '}
                             {comments.length === 1 ? 'comment' : 'comments'}
                         </span>
+                    ) : (
+                        comments &&
+                        comments.length === 0 && <span>Leave a comment...</span>
                     )}
                 </div>
             </div>
             {show && (
                 <div>
-                    {comments.length !== 0 ? (
+                    {comments &&
                         comments.map((comment) => (
                             <Comment
                                 key={comment._id}
@@ -193,12 +182,13 @@ const PostCard = ({
                                 currentUser={currentUser}
                                 handleDeleteComment={handleDeleteComment}
                             />
-                        ))
-                    ) : (
+                        ))}
+                    {comments && comments.length === 0 && (
                         <div className="border-t-2 py-4 italic">
                             There are no comments yet! Be the first
                         </div>
                     )}
+
                     <form
                         className="flex flex-col gap-4"
                         onSubmit={(e) => handleSubmit(e)}>

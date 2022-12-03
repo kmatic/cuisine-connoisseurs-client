@@ -3,6 +3,7 @@ import { BsSearch } from 'react-icons/bs'
 import { TokenContext, UserContext } from '../../App'
 import UserCard from './UserCard'
 import useFetchData from '../Hooks/useFetchData'
+import useFocus from '../Hooks/useFocus'
 
 const Users = () => {
     const { token } = useContext(TokenContext)
@@ -12,6 +13,8 @@ const Users = () => {
         query: '',
         filtered: [],
     })
+
+    const { focusRef } = useFocus()
 
     const url = 'http://localhost:5000/api/users'
     const { data: users } = useFetchData(url)
@@ -120,6 +123,7 @@ const Users = () => {
             <section className="self-center border-b-2">
                 <div className="flex items-center gap-2">
                     <input
+                        ref={focusRef}
                         type="text"
                         placeholder="Find a user"
                         className="bg-inherit pb-1 focus:outline-none"

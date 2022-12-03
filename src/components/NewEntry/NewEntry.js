@@ -1,6 +1,7 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useRef, useEffect } from 'react'
 import ReactStars from 'react-rating-stars-component'
 import { TokenContext, UserContext } from '../../App'
+import useFocus from '../Hooks/useFocus'
 
 const NewEntry = () => {
     const [restaurant, setRestaurant] = useState('')
@@ -9,6 +10,8 @@ const NewEntry = () => {
 
     const { currentUser } = useContext(UserContext)
     const { token } = useContext(TokenContext)
+
+    const { focusRef } = useFocus()
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -40,6 +43,7 @@ const NewEntry = () => {
                 className="flex flex-col gap-3"
                 onSubmit={(e) => handleSubmit(e)}>
                 <input
+                    ref={focusRef}
                     type="text"
                     className="rounded border bg-gray-100 p-2 focus:border-blue-500 focus:outline-none"
                     placeholder="I went to..."
