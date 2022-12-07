@@ -1,4 +1,4 @@
-import { useContext, useState, useRef, useEffect } from 'react'
+import { useContext, useState } from 'react'
 import ReactStars from 'react-rating-stars-component'
 import { TokenContext, UserContext } from '../../App'
 import useFocus from '../Hooks/useFocus'
