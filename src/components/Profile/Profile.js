@@ -24,6 +24,9 @@ const Profile = () => {
     const [city, setCity] = useState('')
     const [message, setMessage] = useState('')
 
+    // picture
+    const [file, setFile] = useState()
+
     function handleEditMode() {
         setEditMode(true)
         setCity(profile.city)
@@ -55,15 +58,38 @@ const Profile = () => {
         }
     }
 
+    async function handleUpload(e) {
+        e.preventDefault()
+    }
+
     return (
         <div className="mx-auto my-10 flex w-full max-w-5xl flex-col gap-6">
             <div className="grid grid-cols-1 gap-y-6 rounded-xl bg-white p-8 drop-shadow-md min-[850px]:grid-cols-3">
                 <div className="col-span-2 flex flex-col gap-6 min-[850px]:flex-row">
-                    <img
-                        src={userPicture}
-                        className="w-28 shrink-0 self-center"
-                        alt=""
-                    />
+                    <div className="relative flex flex-col gap-1 self-center">
+                        <img
+                            src={userPicture}
+                            className="w-28 shrink-0 rounded-full"
+                            alt="Profile"
+                        />
+                        {editMode && (
+                            <form
+                                className="flex flex-col gap-1"
+                                onSubmit={(e) => handleUpload(e)}>
+                                <input
+                                    className="cursor-pointer bg-gray-100 text-xs text-gray-900"
+                                    type="file"
+                                    onChange={(e) => setFile(e.target.files[0])}
+                                    accept="image/*"
+                                />
+                                <button
+                                    type="submit"
+                                    className="h-6 flex-none self-start rounded-md bg-green-500 px-2 text-xs font-semibold text-white hover:brightness-125">
+                                    SAVE PICTURE
+                                </button>
+                            </form>
+                        )}
+                    </div>
                     {!editMode ? (
                         <div className="flex flex-col gap-2">
                             <div className="flex justify-between border-b py-2">

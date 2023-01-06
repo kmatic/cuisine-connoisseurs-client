@@ -93,12 +93,11 @@ const PostCard = ({
                 </div>
                 <div
                     className="relative ml-auto mr-2 self-center"
-                    onClick={() => setOverFlowMenu(!overFlowMenu)}>
+                    onClick={() => setOverFlowMenu(!overFlowMenu)}
+                    ref={overFlowRef}>
                     <AiOutlineEllipsis className="cursor-pointer text-xl" />
                     {overFlowMenu && (
-                        <div
-                            ref={overFlowRef}
-                            className="absolute top-4 right-2 w-44 rounded-md bg-white p-1 drop-shadow-md">
+                        <div className="absolute top-4 right-2 w-44 rounded-md bg-white p-1 drop-shadow-md">
                             {currentUser._id === post.user._id ? (
                                 <div
                                     className="flex cursor-pointer items-center gap-1 rounded-md p-2 hover:bg-gray-200"
