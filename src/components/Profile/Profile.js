@@ -6,6 +6,7 @@ import moment from 'moment'
 import { TokenContext, UserContext } from '../../App'
 import ReactStars from 'react-rating-stars-component'
 import useFetchData from '../Hooks/useFetchData'
+import axios from 'axios'
 
 const Profile = () => {
     const { id } = useParams()
@@ -48,7 +49,6 @@ const Profile = () => {
             })
             if (res.status !== 200) return console.error('Something went wrong')
             const data = await res.json()
-            // console.log(data)
             console.log(data.updatedUser)
             setProfile(data.updatedUser)
             setEditMode(false)
@@ -60,6 +60,24 @@ const Profile = () => {
 
     async function handleUpload(e) {
         e.preventDefault()
+
+        const formData = new FormData()
+        formData.append('image', file)
+
+        try {
+            const res = await fetch(
+                `http://localhost:5000/api/profile/${id}/image`,
+                {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     return (
