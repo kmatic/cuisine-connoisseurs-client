@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import userPicture from '../../assets/defaultUserImg.png'
+import defaultProfile from '../../assets/defaultUserImg.png'
 import { FiEdit2 } from 'react-icons/fi'
 import moment from 'moment'
 import { TokenContext, UserContext } from '../../App'
@@ -95,7 +95,7 @@ const Profile = () => {
                     <div className="relative flex flex-col gap-1 self-center">
                         {profile && (
                             <img
-                                src={profile.imageUrl || userPicture}
+                                src={profile.imageUrl || defaultProfile}
                                 className="w-28 shrink-0 rounded-full"
                                 alt="Profile"
                             />
@@ -244,7 +244,7 @@ const Profile = () => {
                                         }
                                         className="shrink-0 cursor-pointer">
                                         <img
-                                            src={userPicture}
+                                            src={defaultProfile}
                                             alt=""
                                             className="w-8"
                                         />

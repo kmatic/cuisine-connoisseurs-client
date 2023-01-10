@@ -10,7 +10,13 @@ const UserCard = ({ user, currentUser, handleFollow, handleUnfollow }) => {
             key={user._id}
             onClick={() => navigate(`/profile/${user._id}`)}>
             <div className="flex items-center gap-2">
-                <img src={defaultProfile} alt="" className="w-6" />
+                {user && (
+                    <img
+                        src={user.imageUrl || defaultProfile}
+                        alt=""
+                        className="w-8 shrink-0 rounded-full"
+                    />
+                )}
                 <p className="break-all">{user.username}</p>
             </div>
             {currentUser.following.includes(user._id) ? (
