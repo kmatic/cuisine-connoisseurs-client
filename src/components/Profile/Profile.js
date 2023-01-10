@@ -6,7 +6,6 @@ import moment from 'moment'
 import { TokenContext, UserContext } from '../../App'
 import ReactStars from 'react-rating-stars-component'
 import useFetchData from '../Hooks/useFetchData'
-import axios from 'axios'
 
 const Profile = () => {
     const { id } = useParams()
@@ -25,7 +24,7 @@ const Profile = () => {
     const [city, setCity] = useState('')
     const [message, setMessage] = useState('')
 
-    // picture
+    // picture state
     const [file, setFile] = useState()
 
     function handleEditMode() {
@@ -49,8 +48,11 @@ const Profile = () => {
             })
             if (res.status !== 200) return console.error('Something went wrong')
             const data = await res.json()
-            console.log(data.updatedUser)
-            setProfile(data.updatedUser)
+            setProfile((prevState) => ({
+                ...prevState,
+                bio: data.updatedUser.bio,
+                city: data.updatedUser.city,
+            }))
             setEditMode(false)
         } catch (err) {
             console.error(err)
@@ -75,6 +77,12 @@ const Profile = () => {
                     },
                 }
             )
+            if (res.status !== 200) return console.error('Something went wrong')
+            const data = await res.json()
+            setProfile((prevState) => ({
+                ...prevState,
+                imageUrl: data.imageUrl,
+            }))
         } catch (err) {
             console.error(err)
         }
@@ -85,11 +93,13 @@ const Profile = () => {
             <div className="grid grid-cols-1 gap-y-6 rounded-xl bg-white p-8 drop-shadow-md min-[850px]:grid-cols-3">
                 <div className="col-span-2 flex flex-col gap-6 min-[850px]:flex-row">
                     <div className="relative flex flex-col gap-1 self-center">
-                        <img
-                            src={userPicture}
-                            className="w-28 shrink-0 rounded-full"
-                            alt="Profile"
-                        />
+                        {profile && (
+                            <img
+                                src={profile.imageUrl || userPicture}
+                                className="w-28 shrink-0 rounded-full"
+                                alt="Profile"
+                            />
+                        )}
                         {editMode && (
                             <form
                                 className="flex flex-col gap-1"
