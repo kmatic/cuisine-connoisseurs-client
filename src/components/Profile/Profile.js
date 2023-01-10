@@ -96,8 +96,8 @@ const Profile = () => {
                         {profile && (
                             <img
                                 src={profile.imageUrl || defaultProfile}
-                                className="w-28 shrink-0 rounded-full"
-                                alt="Profile"
+                                className="flex w-28 shrink-0 rounded-full"
+                                alt=""
                             />
                         )}
                         {editMode && (
@@ -244,9 +244,12 @@ const Profile = () => {
                                         }
                                         className="shrink-0 cursor-pointer">
                                         <img
-                                            src={defaultProfile}
+                                            src={
+                                                follower.imageUrl ||
+                                                defaultProfile
+                                            }
                                             alt=""
-                                            className="w-8"
+                                            className="w-8 rounded-full"
                                         />
                                     </div>
                                     <Link
