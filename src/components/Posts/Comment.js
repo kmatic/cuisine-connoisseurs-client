@@ -12,7 +12,11 @@ const Comment = ({ comment, currentUser, handleDeleteComment }) => {
                 <div
                     className="shrink-0 cursor-pointer self-start md:self-center"
                     onClick={() => navigate(`/profile/${comment.user._id}`)}>
-                    <img src={defaultProfile} alt="" className="w-6" />
+                    <img
+                        src={comment.user.imageUrl || defaultProfile}
+                        alt=""
+                        className="w-6 rounded-full"
+                    />
                 </div>
                 <div className="flex flex-col">
                     <Link

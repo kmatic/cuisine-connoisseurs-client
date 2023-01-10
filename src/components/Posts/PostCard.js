@@ -7,6 +7,7 @@ import { useState, useRef } from 'react'
 import Comment from './Comment'
 import useOutsideChecker from '../Hooks/useOutsideClick'
 import useFetchData from '../Hooks/useFetchData'
+import defaultProfile from '../../assets/defaultUserImg.png'
 
 const PostCard = ({
     post,
@@ -80,10 +81,17 @@ const PostCard = ({
         }
     }
 
+    console.log(post)
+
     return (
         <div className="border-t-2 py-3">
             <div className="mb-2 flex text-sm text-slate-600">
-                <div className="hover:brightness-150">
+                <div className="gap flex gap-1 hover:brightness-150">
+                    <img
+                        src={post.user.imageUrl || defaultProfile}
+                        alt=""
+                        className="w-6 rounded-full"
+                    />
                     <Link
                         className="break-all font-bold"
                         to={`/profile/${post.user._id}`}>
