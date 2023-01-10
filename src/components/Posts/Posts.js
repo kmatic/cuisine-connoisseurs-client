@@ -38,9 +38,11 @@ const Posts = () => {
             )
             if (res.status !== 200) return console.error('Something went wrong')
             const obj = await res.json()
-            // replace liked post in state to rerender like
+            // update posts likes in state to rerender like
             const updatedPosts = posts.map((updatedPost) => {
-                if (updatedPost._id === obj.post._id) return obj.post
+                if (updatedPost._id === obj.post._id) {
+                    updatedPost.likes = obj.post.likes
+                }
                 return updatedPost
             })
             setPosts(updatedPosts)

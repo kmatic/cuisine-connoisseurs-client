@@ -81,23 +81,23 @@ const PostCard = ({
         }
     }
 
-    console.log(post)
-
     return (
         <div className="border-t-2 py-3">
             <div className="mb-2 flex text-sm text-slate-600">
-                <div className="gap flex gap-1 hover:brightness-150">
+                <div className="flex items-center gap-1">
                     <img
                         src={post.user.imageUrl || defaultProfile}
                         alt=""
-                        className="w-6 rounded-full"
+                        className="w-7 rounded-full"
                     />
-                    <Link
-                        className="break-all font-bold"
-                        to={`/profile/${post.user._id}`}>
-                        {post.user.username}{' '}
-                    </Link>
-                    <span>ate at...</span>
+                    <div className="hover:brightness-150">
+                        <Link
+                            className="break-all font-bold"
+                            to={`/profile/${post.user._id}`}>
+                            {post.user.username}{' '}
+                        </Link>
+                        <span>ate at...</span>
+                    </div>
                 </div>
                 <div
                     className="relative ml-auto mr-2 self-center"
