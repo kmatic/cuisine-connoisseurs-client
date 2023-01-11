@@ -2,6 +2,7 @@ import { BiFoodMenu } from 'react-icons/bi'
 import { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 import useFocus from '../Hooks/useFocus'
+import notify from '../../utils/notify'
 
 const Signup = ({ user }) => {
     const [username, setUsername] = useState('')
@@ -24,8 +25,8 @@ const Signup = ({ user }) => {
                     'Content-type': 'application/json',
                 },
             })
-            if (res.status !== 200) return console.error('Something went wrong')
-            console.log(await res.json())
+            const obj = await res.json()
+            notify(obj, res.status, 'signup')
         } catch (err) {
             console.error(err)
         }

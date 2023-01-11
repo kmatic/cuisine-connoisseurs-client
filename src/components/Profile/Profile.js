@@ -96,7 +96,7 @@ const Profile = () => {
                         {profile && (
                             <img
                                 src={profile.imageUrl || defaultProfile}
-                                className="flex w-28 shrink-0 rounded-full"
+                                className="flex w-28 shrink-0 rounded-full outline outline-4 outline-gray-400"
                                 alt=""
                             />
                         )}

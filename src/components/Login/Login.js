@@ -3,6 +3,7 @@ import { useContext, useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 import { TokenContext, UserContext } from '../../App'
 import useFocus from '../Hooks/useFocus'
+import notify from '../../utils/notify'
 
 const Login = () => {
     const [username, setUsername] = useState('')
@@ -25,11 +26,10 @@ const Login = () => {
                     'Content-type': 'application/json',
                 },
             })
-            if (res.status !== 200)
-                return console.error('Wrong username or password')
-            const data = await res.json()
-            addCurrentUser(data.user)
-            addToken(data.token)
+            const obj = await res.json()
+            addCurrentUser(obj.user)
+            addToken(obj.token)
+            notify(obj, res.status, 'signin')
         } catch (err) {
             console.error(err)
         }

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import ReactStars from 'react-rating-stars-component'
 import moment from 'moment'
 import { FaHeart, FaTrashAlt } from 'react-icons/fa'
@@ -20,6 +20,7 @@ const PostCard = ({
     const [commentText, setCommentText] = useState('')
     const [overFlowMenu, setOverFlowMenu] = useState(false)
 
+    const navigate = useNavigate()
     const overFlowRef = useRef(null)
     useOutsideChecker(overFlowRef, setOverFlowMenu)
 
@@ -49,7 +50,7 @@ const PostCard = ({
             )
             if (res.status !== 200) return console.error('Something went wrong')
             const obj = await res.json()
-            const updatedComments = [...comments, obj.data]
+            const updatedComments = [...comments, obj.comment]
             setComments(updatedComments)
             setCommentText('')
         } catch (err) {
@@ -85,11 +86,15 @@ const PostCard = ({
         <div className="border-t-2 py-3">
             <div className="mb-2 flex text-sm text-slate-600">
                 <div className="flex items-center gap-1">
-                    <img
-                        src={post.user.imageUrl || defaultProfile}
-                        alt=""
-                        className="w-7 rounded-full"
-                    />
+                    <div
+                        className="cursor-pointer"
+                        onClick={() => navigate(`/profile/${post.user._id}`)}>
+                        <img
+                            src={post.user.imageUrl || defaultProfile}
+                            alt=""
+                            className="w-7 rounded-full"
+                        />
+                    </div>
                     <div className="hover:brightness-150">
                         <Link
                             className="break-all font-bold"

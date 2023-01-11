@@ -16,6 +16,8 @@ import {
 } from 'react-router-dom'
 import useToken from './components/Hooks/useToken'
 import useUser from './components/Hooks/useUser'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export const UserContext = createContext()
 export const TokenContext = createContext()
@@ -29,6 +31,12 @@ const App = () => {
             <TokenContext.Provider value={{ token, addToken, removeToken }}>
                 <UserContext.Provider
                     value={{ addCurrentUser, currentUser, removeCurrentUser }}>
+                    <ToastContainer
+                        position={toast.POSITION.TOP_CENTER}
+                        autoClose={4000}
+                        pauseOnFocusLoss={false}
+                        limit={3}
+                    />
                     <Header />
                     <main className="p-4">
                         <Routes>
