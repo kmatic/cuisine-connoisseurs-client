@@ -2,6 +2,7 @@ import { useContext, useState } from 'react'
 import { BiFoodMenu } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import { TokenContext, UserContext } from '../App'
+import notify from '../utils/notify'
 
 const Header = () => {
     const { currentUser, removeCurrentUser } = useContext(UserContext)

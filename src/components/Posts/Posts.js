@@ -3,6 +3,7 @@ import { useContext } from 'react'
 import { TokenContext, UserContext } from '../../App'
 import PostCard from './PostCard'
 import useFetchData from '../Hooks/useFetchData'
+import notify from '../../utils/notify'
 
 const Posts = () => {
     const navigate = useNavigate()
@@ -70,6 +71,7 @@ const Posts = () => {
                 (post) => post._id !== obj.deletedPost._id
             )
             setPosts(updatedPosts)
+            notify(obj, res.status, 'deletepost')
         } catch (err) {
             console.error(err)
         }

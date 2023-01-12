@@ -2,15 +2,17 @@ import { useContext, useState } from 'react'
 import ReactStars from 'react-rating-stars-component'
 import { TokenContext, UserContext } from '../../App'
 import useFocus from '../Hooks/useFocus'
+import { useNavigate } from 'react-router-dom'
+import notify from '../../utils/notify'
 
 const NewEntry = () => {
     const [restaurant, setRestaurant] = useState('')
     const [review, setReview] = useState('')
     const [rating, setRating] = useState(0)
 
+    const navigate = useNavigate()
     const { currentUser } = useContext(UserContext)
     const { token } = useContext(TokenContext)
-
     const { focusRef } = useFocus()
 
     async function handleSubmit(e) {
@@ -29,9 +31,9 @@ const NewEntry = () => {
                     user: currentUser._id,
                 }),
             })
-            if (res.status !== 200) return console.error('Something went wrong')
             const data = await res.json()
-            console.log(data)
+            notify(data, res.status, 'newpost')
+            navigate('/posts')
         } catch (err) {
             console.error(err)
         }

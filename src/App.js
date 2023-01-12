@@ -1,5 +1,4 @@
 import Header from './components/Header'
-import Footer from './components/Footer'
 import Landing from './components/Landing/Landing'
 import Login from './components/Login/Login'
 import Signup from './components/Signup/Signup'
@@ -18,6 +17,7 @@ import useToken from './components/Hooks/useToken'
 import useUser from './components/Hooks/useUser'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Footer from './components/Footer'
 
 export const UserContext = createContext()
 export const TokenContext = createContext()
@@ -94,7 +94,7 @@ const App = () => {
                             />
                         </Routes>
                     </main>
-                    {/* <Footer /> */}
+                    <Footer />
                 </UserContext.Provider>
             </TokenContext.Provider>
         </Router>

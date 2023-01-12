@@ -6,6 +6,7 @@ import moment from 'moment'
 import { TokenContext, UserContext } from '../../App'
 import ReactStars from 'react-rating-stars-component'
 import useFetchData from '../Hooks/useFetchData'
+import notify from '../../utils/notify'
 
 const Profile = () => {
     const { id } = useParams()
@@ -54,6 +55,7 @@ const Profile = () => {
                 city: data.updatedUser.city,
             }))
             setEditMode(false)
+            notify(data, res.status, 'profilebio')
         } catch (err) {
             console.error(err)
             setEditMode(false)
@@ -77,12 +79,12 @@ const Profile = () => {
                     },
                 }
             )
-            if (res.status !== 200) return console.error('Something went wrong')
             const data = await res.json()
             setProfile((prevState) => ({
                 ...prevState,
                 imageUrl: data.imageUrl,
             }))
+            notify(data, res.status, 'profilepicture')
         } catch (err) {
             console.error(err)
         }
