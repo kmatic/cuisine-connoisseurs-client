@@ -22,11 +22,11 @@ const Users = () => {
     async function handleFollow(e, user) {
         e.stopPropagation()
 
-        const [followers, following] = isFollowing(user, currentUser)
+        const method = isFollowing(user, currentUser)
 
         try {
             const res = await fetch(
-                `http://localhost:5000/api/profile/${user._id}/follow`,
+                `http://localhost:5000/api/profile/${user._id}/${method}`,
                 {
                     method: 'PATCH',
                     headers: {
@@ -34,8 +34,6 @@ const Users = () => {
                         Authorization: `Bearer ${token}`,
                     },
                     body: JSON.stringify({
-                        followers: followers,
-                        following: following,
                         user: currentUser._id,
                     }),
                 }
@@ -63,25 +61,14 @@ const Users = () => {
 
     function isFollowing(user, currentUser) {
         // handles whether to follow or unfollow user
-        let newFollowers = []
-        let newFollowing = []
         // debugger
-
         if (currentUser.following.includes(user._id)) {
-            // followed users new followers with current users id excluded
-            newFollowers = user.followers.filter((id) => id !== currentUser._id)
-
-            // current users following with followed user id excluded
-            newFollowing = currentUser.following.filter((id) => id !== user._id)
             console.log('unfollowed')
+            return 'unfollow'
         } else {
-            // add new followers and following to respective users
-            newFollowers = [...user.followers, currentUser._id]
-            newFollowing = [...currentUser.following, user._id]
             console.log('followed')
+            return 'follow'
         }
-
-        return [newFollowers, newFollowing]
     }
 
     useEffect(() => {
