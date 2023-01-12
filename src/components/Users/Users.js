@@ -21,14 +21,9 @@ const Users = () => {
 
     async function handleFollow(e, user) {
         e.stopPropagation()
-        if (
-            user.followers.includes(currentUser._id) ||
-            currentUser.following.includes(user._id)
-        ) {
-            return
-        }
-        const followers = [...user.followers, currentUser._id]
-        const following = [...currentUser.following, user._id]
+
+        const [followers, following] = isFollowing(user, currentUser)
+
         try {
             const res = await fetch(
                 `http://localhost:5000/api/profile/${user._id}/follow`,
@@ -47,52 +42,7 @@ const Users = () => {
             )
             if (res.status !== 200) return console.error('Something went wrong')
             const obj = await res.json()
-            addCurrentUser(obj.user)
-            console.log(obj.user)
-        } catch (err) {
-            console.error(err)
-        }
-    }
-
-    async function handleUnfollow(e, user) {
-        console.log('yeet')
-        e.stopPropagation()
-        if (
-            !user.followers.includes(currentUser._id) ||
-            !currentUser.following.includes(user._id)
-        ) {
-            return
-        }
-
-        // followed users new followers with current users id included
-        const newUserFollowers = user.followers.filter(
-            (id) => id !== currentUser._id
-        )
-
-        // current users following with followed user id included
-        const newCurrentUserFollowing = currentUser.following.filter(
-            (id) => id !== user._id
-        )
-        console.log('yeet2')
-        try {
-            const res = await fetch(
-                `http://localhost:5000/api/profile/${user._id}/unfollow`,
-                {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-type': 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    },
-                    body: JSON.stringify({
-                        followers: newUserFollowers,
-                        following: newCurrentUserFollowing,
-                        user: currentUser._id,
-                    }),
-                }
-            )
-            if (res.status !== 200) return console.error('Something went wrong')
-            const obj = await res.json()
-            addCurrentUser(obj.user)
+            addCurrentUser(obj.currentUser)
         } catch (err) {
             console.error(err)
         }
@@ -109,6 +59,29 @@ const Users = () => {
             query: e.target.value,
             filtered: results,
         })
+    }
+
+    function isFollowing(user, currentUser) {
+        // handles whether to follow or unfollow user
+        let newFollowers = []
+        let newFollowing = []
+        // debugger
+
+        if (currentUser.following.includes(user._id)) {
+            // followed users new followers with current users id excluded
+            newFollowers = user.followers.filter((id) => id !== currentUser._id)
+
+            // current users following with followed user id excluded
+            newFollowing = currentUser.following.filter((id) => id !== user._id)
+            console.log('unfollowed')
+        } else {
+            // add new followers and following to respective users
+            newFollowers = [...user.followers, currentUser._id]
+            newFollowing = [...currentUser.following, user._id]
+            console.log('followed')
+        }
+
+        return [newFollowers, newFollowing]
     }
 
     useEffect(() => {
@@ -145,7 +118,6 @@ const Users = () => {
                                 user={user}
                                 currentUser={currentUser}
                                 handleFollow={handleFollow}
-                                handleUnfollow={handleUnfollow}
                             />
                         ))}
                     {search.filtered && search.filtered.length === 0 && (
