@@ -8,6 +8,8 @@ Users can create accounts and rate restaurants they have been to recently. They 
 
 [Demo the web app](https://cuisineconnoisseurs.onrender.com)
 
+https://user-images.githubusercontent.com/3086068/212775794-a9db77c2-67e3-454d-b5e1-96693381e074.mp4
+
 ## Built with
 
 - ReactJS
