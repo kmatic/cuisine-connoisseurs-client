@@ -10,7 +10,7 @@ const Posts = () => {
     const navigate = useNavigate()
     const { currentUser } = useContext(UserContext)
     const { token } = useContext(TokenContext)
-    const url = `http://cuisineconnoisseursapi.onrender.com/api/posts/${currentUser._id}`
+    const url = `https://cuisineconnoisseursapi.onrender.com/api/posts/${currentUser._id}`
 
     const { data: posts, setData: setPosts, loading } = useFetchData(url)
 
