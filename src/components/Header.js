@@ -1,11 +1,12 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { BiFoodMenu } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import { TokenContext, UserContext } from '../App'
+import notify from '../utils/notify'
 
 const Header = () => {
     const { currentUser, removeCurrentUser } = useContext(UserContext)
-    const { removeToken } = useContext(TokenContext)
+    const { token, removeToken } = useContext(TokenContext)
 
     const [navOpen, setNavOpen] = useState(false)
 
@@ -13,7 +14,38 @@ const Header = () => {
         e.preventDefault()
         removeCurrentUser()
         removeToken()
+        notify({ message: 'User logged out' }, 200, 'logout')
     }
+
+    useEffect(() => {
+        async function verifyToken() {
+            try {
+                const res = await fetch(
+                    'https://cuisineconnoisseursapi.onrender.com/api/verifyToken',
+                    {
+                        method: 'POST',
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            'Content-type': 'application/json',
+                        },
+                    }
+                )
+                if (res.status === 401) {
+                    removeCurrentUser()
+                    removeToken()
+                }
+            } catch (err) {
+                console.error(err)
+            }
+        }
+
+        if (currentUser) {
+            verifyToken()
+        }
+        if (currentUser && !token) {
+            removeCurrentUser()
+        }
+    }, [currentUser, token, removeCurrentUser, removeToken])
 
     return (
         <header className="bg-slate-900 p-4 text-white">

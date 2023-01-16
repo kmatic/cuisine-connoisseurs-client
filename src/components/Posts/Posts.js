@@ -4,15 +4,15 @@ import { TokenContext, UserContext } from '../../App'
 import PostCard from './PostCard'
 import useFetchData from '../Hooks/useFetchData'
 import notify from '../../utils/notify'
+import Loader from '../Loader'
 
 const Posts = () => {
     const navigate = useNavigate()
     const { currentUser } = useContext(UserContext)
     const { token } = useContext(TokenContext)
+    const url = `http://cuisineconnoisseursapi.onrender.com/api/posts/${currentUser._id}`
 
-    const url = `http://localhost:5000/api/posts/${currentUser._id}`
-
-    const { data: posts, setData: setPosts } = useFetchData(url)
+    const { data: posts, setData: setPosts, loading } = useFetchData(url)
 
     async function handleLike(post) {
         let newLikes = []
@@ -25,7 +25,7 @@ const Posts = () => {
 
         try {
             const res = await fetch(
-                `http://localhost:5000/api/posts/${post._id}/like`,
+                `https://cuisineconnoisseursapi.onrender.com/api/posts/${post._id}/like`,
                 {
                     method: 'PATCH',
                     headers: {
@@ -55,7 +55,7 @@ const Posts = () => {
     async function handleDeletePost(postId) {
         try {
             const res = await fetch(
-                `http://localhost:5000/api/posts/${postId}`,
+                `https://cuisineconnoisseursapi.onrender.com/api/posts/${postId}`,
                 {
                     method: 'DELETE',
                     headers: {
@@ -91,6 +91,7 @@ const Posts = () => {
             <div>
                 <h3 className="text-lg font-semibold">RECENT REVIEWS</h3>
                 <div>
+                    {loading && <Loader loading={loading} />}
                     {posts &&
                         posts.map((post) => (
                             <PostCard

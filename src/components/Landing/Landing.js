@@ -10,7 +10,7 @@ import tailwindIcon from '../../assets/icons/tailwind.svg'
 const Landing = () => {
     return (
         <div className="mx-auto my-10 h-max w-full max-w-5xl">
-            <section className="my-20 text-center text-4xl">
+            <section className="my-20 break-all text-center text-4xl">
                 <h1 className="font-bold">Welcome to CuisineConnoisseurs!</h1>
             </section>
             <section className="flex flex-col gap-6 md:flex-row">

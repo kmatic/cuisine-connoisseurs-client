@@ -4,6 +4,7 @@ import { TokenContext, UserContext } from '../../App'
 import UserCard from './UserCard'
 import useFetchData from '../Hooks/useFetchData'
 import useFocus from '../Hooks/useFocus'
+import Loader from '../Loader'
 
 const Users = () => {
     const { token } = useContext(TokenContext)
@@ -16,8 +17,8 @@ const Users = () => {
 
     const { focusRef } = useFocus()
 
-    const url = 'http://localhost:5000/api/users'
-    const { data: users } = useFetchData(url)
+    const url = 'https://cuisineconnoisseursapi.onrender.com/api/users'
+    const { data: users, loading } = useFetchData(url)
 
     async function handleFollow(e, user) {
         e.stopPropagation()
@@ -26,7 +27,7 @@ const Users = () => {
 
         try {
             const res = await fetch(
-                `http://localhost:5000/api/profile/${user._id}/${method}`,
+                `https://cuisineconnoisseursapi.onrender.com/api/profile/${user._id}/${method}`,
                 {
                     method: 'PATCH',
                     headers: {
@@ -98,6 +99,7 @@ const Users = () => {
                     Find others in the CuisineConnoisseurs community:
                 </h3>
                 <div className="my-8 grid max-w-3xl grid-cols-1 gap-4 md:grid-cols-2">
+                    {loading && <Loader loading={loading} />}
                     {search.filtered &&
                         search.filtered.map((user) => (
                             <UserCard

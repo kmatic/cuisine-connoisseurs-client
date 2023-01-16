@@ -24,7 +24,7 @@ const PostCard = ({
     const overFlowRef = useRef(null)
     useOutsideChecker(overFlowRef, setOverFlowMenu)
 
-    const url = `http://localhost:5000/api/posts/${post._id}/comments`
+    const url = `https://cuisineconnoisseursapi.onrender.com/api/posts/${post._id}/comments`
     const { data: comments, setData: setComments } = useFetchData(url)
 
     function handleComments() {
@@ -35,7 +35,7 @@ const PostCard = ({
         e.preventDefault()
         try {
             const res = await fetch(
-                `http://localhost:5000/api/posts/${post._id}/comments`,
+                `https://cuisineconnoisseursapi.onrender.com/api/posts/${post._id}/comments`,
                 {
                     method: 'POST',
                     headers: {
@@ -62,7 +62,7 @@ const PostCard = ({
         e.preventDefault()
         try {
             const res = await fetch(
-                `http://localhost:5000/api/posts/${post._id}/comments/${commentId}`,
+                `https://cuisineconnoisseursapi.onrender.com/api/posts/${post._id}/comments/${commentId}`,
                 {
                     method: 'DELETE',
                     headers: {
