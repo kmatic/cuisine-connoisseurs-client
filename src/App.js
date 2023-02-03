@@ -19,8 +19,8 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Footer from './components/Footer'
 
-export const UserContext = createContext()
-export const TokenContext = createContext()
+export const UserContext = createContext({})
+export const TokenContext = createContext({})
 
 const App = () => {
     const { token, addToken, removeToken } = useToken()

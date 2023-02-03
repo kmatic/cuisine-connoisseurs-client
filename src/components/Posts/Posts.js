@@ -84,7 +84,7 @@ const Posts = () => {
                 been eating...
             </h2>
             <button
-                className="self-start self-center rounded-md border-2 border-solid border-slate-900 bg-slate-900 px-6 py-1 text-lg font-semibold text-white hover:bg-inherit hover:text-slate-900"
+                className="self-center rounded-md border-2 border-solid border-slate-900 bg-slate-900 px-6 py-1 text-lg font-semibold text-white hover:bg-inherit hover:text-slate-900"
                 onClick={() => navigate(`/new`)}>
                 &#43; NEW ENTRY
             </button>
