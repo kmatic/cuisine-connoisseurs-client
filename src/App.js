@@ -18,6 +18,7 @@ import useUser from './components/Hooks/useUser'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Footer from './components/Footer'
+import NotFound from './components/NotFound'
 
 export const UserContext = createContext({})
 export const TokenContext = createContext({})
@@ -92,6 +93,7 @@ const App = () => {
                                     )
                                 }
                             />
+                            <Route path="*" element={<NotFound />} />
                         </Routes>
                     </main>
                     <Footer />

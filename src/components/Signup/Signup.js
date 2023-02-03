@@ -42,7 +42,7 @@ const Signup = ({ user }) => {
 
     if (!user) {
         return (
-            <div className="mx-auto my-10 flex w-full max-w-lg max-w-sm flex-col items-center gap-8 rounded-md bg-white p-6 drop-shadow-lg">
+            <div className="mx-auto my-10 flex w-full max-w-sm flex-col items-center gap-8 rounded-md bg-white p-6 drop-shadow-lg">
                 {loading ? (
                     <Loader loading={loading} />
                 ) : (
