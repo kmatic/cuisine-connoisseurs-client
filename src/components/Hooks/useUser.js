@@ -2,14 +2,15 @@ import { useState } from 'react'
 
 const useUser = () => {
     const getUser = () => {
-        const user = localStorage.getItem('user')
+        const jsonUser = localStorage.getItem('user')
+        const user = JSON.parse(jsonUser)
         return user
     }
 
     const [currentUser, setCurrentUser] = useState(getUser())
 
     const addCurrentUser = (user) => {
-        localStorage.setItem('user', user)
+        localStorage.setItem('user', JSON.stringify(user))
         setCurrentUser(user)
     }
 

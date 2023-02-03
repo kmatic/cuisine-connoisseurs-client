@@ -1,26 +1,29 @@
-import Header from './components/Header'
-import Landing from './components/Landing/Landing'
-import Login from './components/Login/Login'
-import Signup from './components/Signup/Signup'
-import Users from './components/Users/Users'
-import Profile from './components/Profile/Profile'
-import Posts from './components/Posts/Posts'
-import NewEntry from './components/NewEntry/NewEntry'
-import { createContext } from 'react'
 import {
     BrowserRouter as Router,
     Routes,
     Route,
     Navigate,
 } from 'react-router-dom'
+import {
+    Header,
+    Landing,
+    Login,
+    Signup,
+    Users,
+    Profile,
+    Posts,
+    NewEntry,
+    Footer,
+    NotFound,
+} from './components'
+import { createContext } from 'react'
 import useToken from './components/Hooks/useToken'
 import useUser from './components/Hooks/useUser'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import Footer from './components/Footer'
 
-export const UserContext = createContext()
-export const TokenContext = createContext()
+export const UserContext = createContext({})
+export const TokenContext = createContext({})
 
 const App = () => {
     const { token, addToken, removeToken } = useToken()
@@ -92,6 +95,7 @@ const App = () => {
                                     )
                                 }
                             />
+                            <Route path="*" element={<NotFound />} />
                         </Routes>
                     </main>
                     <Footer />
